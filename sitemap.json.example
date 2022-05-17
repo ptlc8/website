@@ -1,0 +1,97 @@
+[
+    {
+        "color": "#09a3b5",
+        "img": "/cards/assets/back.png",
+        "title": "Poképrof",
+        "content": [
+            {
+                "link": "/cards",
+                "title": "Jouer"
+    		},
+            {
+                "link": "/cards/gallery.php",
+                "title": "Gallerie de cartes"
+            },
+            {
+                "link": "/cards/create.php",
+                "title": "Créer une carte"
+            }
+        ]
+    },
+	{
+		"color": "#db4f64",
+		"img": "/notes/favicon.ico",
+		"title": "Trucs utiles",
+		"content": [
+			{
+				"link": "/notes",
+				"title": "Calculateur de moyenne"
+			},
+			{	
+				"link": "/wheel",
+				"title": "Roue des choix"
+			},
+			{
+    			"link": "/agenda",
+				"title": "Agenda partagé"
+			}
+		]
+	},
+	{
+		"color": "#5ec05e",
+		"img": "/sm/assets/glob-lilglob.png",
+		"title": "Smash Meme",
+		"content": [
+			{
+				"link": "/sm/play",
+				"title": "Tester seul"
+			},
+			{
+				"link": "/sm/online",
+				"title": "En multijoueur"
+			},
+			{
+				"link": "/sm/create",
+				"title": "Creér un personnage"
+    		}
+		]
+	},
+	{
+		"color": "#fcf790",
+		"img":"/pcv/assets/player.png",
+		"title": "Trucs cools",
+		"content": [
+			{
+				"link": "/story/create.html",
+				"title": "Créer une \"histoire\""
+			},
+			{
+				"link": "/pcv",
+				"title": "Jojo racing crack"
+			},
+			{
+				"link": "/dixit",
+				"title": "Dixit"
+			}
+		]
+	},
+	{
+		"color": "#ca6fd6",
+		"img": "/ig/random.png",
+		"title": "Le bazar...",
+		"content": [
+			{
+				"link": "/ig",
+				"title":"Images"
+			},
+			{
+				"link": "/kart",
+				"title": "Voitures claquées"
+			},
+			{
+				"link": "/maeva",
+				"title": "Maëva"
+			}
+		]
+	}
+]
