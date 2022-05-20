@@ -14,81 +14,85 @@ html, body {
 
 .triptych {
 	display: flex;
-	flex-direction: column;
+	flex-wrap: wrap;
+	flex-direction: row;
 	height: 100%;
 }
 .triptych > .tab {
-	position: relative;
-	flex: 1;
-	transition: flex .25s ease-out;
-	min-height:0;
 	overflow: hidden;
+	flex-grow: 1;
+	width: 25rem;
+	position: relative;
+	min-height: 8rem;
 }
 .triptych > .tab:hover {
-	flex: 2;
-}
-
-@media (orientation: landscape) {
-	.triptych > .tab > img, .triptych > .tab > canvas {
-		height: 80%;
-	}
+	z-index: 10;
+	box-shadow: black 0 0 16px;
 }
 @media (orientation: portrait) {
-	.triptych > .tab > img, .triptych > .tab > canvas {
-		width: 20%;
+	.triptych > .tab {
+		width: 20rem;
 	}
 }
 
-.triptych > .tab > img, .triptych > .tab > canvas {
+.triptych > .tab > .head {
 	position: absolute;
-	top: 50%;
-	left: 20%;
-	transform: translate(-50%, -50%);
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	transition: all .8s ease;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+.triptych > .tab:hover > .head {
+	left: -100%;
+}
+
+.triptych > .tab > .detail {
+	position: absolute;
+	top: 0;
+	left: 100%;
+	width: 100%;
+	height: 100%;
+	transition: all .8s ease;
+	
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	font-size: 2em;
+	align-items: center;
+	gap: 1rem
+}
+.triptych .tab:hover .detail {
+	left: 0;
+}
+
+
+.triptych > .tab > .head img, .triptych > .tab > .head canvas {
+	max-height: 6rem;
+	max-width: 8rem;
 	filter: drop-shadow(1px 2px 5px rgba(0,0,0,0.2));
 	user-select: none;
 }
-
-.triptych > .tab > .title {
-	display: inline;
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	font-size: 3em;
-	transition: top .25s ease-out;
-	user-select: none;
-}
-.triptych > .tab:hover > .title {
-	top: 40%;
-}
-
-.triptych > .tab > .content {
-	position: absolute;
-	top: 100%;
-	left: 50%;
-	transition: top .25s ease-out;
+.triptych > .tab > .head .title {
 	font-size: 2em;
-	transform: translateX(-25%);
-}
-.triptych .tab:hover .content {
-	top: 55%;
-	top: calc(40% + 1em);
+	user-select: none;
+	padding: 1rem;
 }
 
 .triptych a {
-    /*text-decoration: none;*/
+    text-decoration: none;
 	color: black;
+	background-color: #fff3;
+	border-radius: 8px;
+	padding: 4px;
 }
-.triptych > .tab > .outer-link {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-.triptych >.tab .inner-link {
-    display: block;
-    z-index: 1;
+.triptych a:hover {
+	text-decoration: underline;
 }
 
 .yellow {background-color: #fcf790;}
@@ -102,6 +106,7 @@ html, body {
 
 #april-fool {
     position: fixed;
+	top: 0;
     width: 100%;
     height: 100%;
     z-index: 1000000;

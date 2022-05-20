@@ -6,10 +6,12 @@ window.addEventListener("load", function() {
         for (var subsite of sitemap) {
             triptych.appendChild(createElement("div", {className:"tab",style:{backgroundColor:subsite.color}},
                 [
-                    createElement("img", {src:subsite.img}),
-                    createElement("span", {className:"title"}, subsite.title),
-                    createElement("div", {className:"content"}, subsite.content.map(function(subsite) {
-                        return createElement("a", {className:"inner-link",href:subsite.link}, subsite.title);
+                    createElement("div", {className:"head"}, [
+                        createElement("img", {src:subsite.img}),
+                        createElement("span", {className:"title"}, subsite.title),
+                    ]),
+                    createElement("div", {className:"detail"}, subsite.content.map(function(subsite) {
+                        return createElement("a", {href:subsite.link||"#"}, subsite.title);
                     }))
                 ]
             ));
