@@ -96,6 +96,16 @@ html, body {
 	text-decoration: underline;
 }
 
+.git {
+	position: absolute;
+	bottom: 1rem;
+	right: 1rem;
+	line-height: 1rem;
+}
+.git > img {
+	height: 2rem;
+}
+
 .yellow {background-color: #fcf790;}
 .blue {background-color: #09a3b5;}
 .red {background-color: #db4f64;}

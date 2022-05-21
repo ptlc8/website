@@ -12,7 +12,11 @@ window.addEventListener("load", function() {
                     ]),
                     createElement("div", {className:"detail"}, subsite.content.map(function(subsite) {
                         return createElement("a", {href:subsite.link||"#"}, subsite.title);
-                    }))
+                    }).concat(
+                        subsite.git ? createElement("a", {className:"git", href:subsite.git}, [
+                            createElement("img", {src:"git.png"})
+                        ]) : []
+                    ))
                 ]
             ));
         }
