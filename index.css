@@ -81,6 +81,7 @@ html, body {
 	filter: drop-shadow(1px 2px 5px rgba(0,0,0,0.2));
 	user-select: none;
 	padding: 1rem;
+	width: auto;
 }
 .triptych > .tab > .head .title {
 	font-size: 2em;

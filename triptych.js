@@ -7,14 +7,14 @@ window.addEventListener("load", function() {
             triptych.appendChild(createElement("div", {className:"tab",style:{backgroundColor:subsite.color}},
                 [
                     createElement("div", {className:"head"}, [
-                        createElement("img", {src:subsite.img}),
+                        createElement("img", {src:subsite.img, width:"128"}),
                         createElement("span", {className:"title"}, subsite.title),
                     ]),
                     createElement("div", {className:"detail"}, subsite.content.map(function(subsite) {
                         return createElement("a", {href:subsite.link||"#"}, subsite.title);
                     }).concat(
                         subsite.git ? createElement("a", {className:"git", href:subsite.git}, [
-                            createElement("img", {src:"git.png"})
+                            createElement("img", {src:"git.png", height:"32"})
                         ]) : []
                     ))
                 ]
