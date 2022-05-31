@@ -8,9 +8,9 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1" />
 	</head>
 	<body>
-		<section class="floating container">
-			<h1 class="title">Connexion</h1>
+		<section id="connect" class="floating container">
 			<form method="post" action="">
+				<h1>Connexion</h1>
 				<p class="helper">(Les identifiants de l'ex agnd.fr, de cy-hub.fr et de ambi.dev sont les mêmes)</p>
 				<div>
 					<label for="username">Nom d'utilisateur</label>
@@ -42,8 +42,9 @@
 				}
 				?>
 				
-				<p><a href="register.php<?php echo isset($_REQUEST['go']) ? '?go='.urlencode($_REQUEST['go']) : (isset($_REQUEST['closeafter']) ? '?closeafter' : ''); ?>">Je me connecte pour la première fois</a><br /><a href="forgotten-password.php">J'ai oublié mon mot de passe</a></p>
+				<p><a href="register.php<?php echo isset($_REQUEST['go']) ? '?go='.urlencode($_REQUEST['go']) : (isset($_REQUEST['closeafter']) ? '?closeafter' : ''); ?><?php echo isset($_REQUEST['icon']) ? '?icon='.urlencode($_REQUEST['icon']) : ''; ?>">Je me connecte pour la première fois</a><br /><a href="forgotten-password.php">J'ai oublié mon mot de passe</a></p>
 			</form>
+			<?php if (isset($_REQUEST['icon'])) { ?><img width="200" src="<?= $_REQUEST['icon'] ?>" /><?php } ?>
 		</section>
 	</body>
 </html>

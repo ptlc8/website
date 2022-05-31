@@ -9,9 +9,9 @@
 		<script src='https://www.hCaptcha.com/1/api.js' async defer></script>
 	</head>
 	<body>
-		<section class="floating container">
-			<h1>Inscription</h1>
+		<section id="connect" class="floating container">
 			<form method="POST" action="" class="form">
+				<h1>Inscription</h1>
 				<div>
 					<label for="username">Nom d'utilisateur</label>
 					<input id="username" type="text" name="username" placeholder="Nom d'utilisateur (visible par tous)" <?php echo(isset($_REQUEST['username']) ? 'value="'.$_REQUEST['username'].'" ' : '') ?>required />
@@ -80,8 +80,9 @@
 				}
 				?>
 				
-				<p><a href="connect.php<?php echo isset($_REQUEST['invite']) ? '?invite='.$_REQUEST['invite'] : ''; ?>">J'ai déjà un compte</a></p>
+				<p><a href="connect.php<?php echo isset($_REQUEST['go']) ? '?go='.urlencode($_REQUEST['go']) : (isset($_REQUEST['closeafter']) ? '?closeafter' : ''); ?><?php echo isset($_REQUEST['icon']) ? '?icon='.urlencode($_REQUEST['icon']) : ''; ?>">J'ai déjà un compte</a></p>
 			</form>
+			<?php if (isset($_REQUEST['icon'])) { ?><img width="200" src="<?= $_REQUEST['icon'] ?>" /><?php } ?>
 		</section>
 	</body>
 </html>

@@ -64,7 +64,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
 }
-.container > h1 {
+.container h1 {
     text-align: center;
     font-size: 2.4em;
     margin: 0.1em;
@@ -76,7 +76,26 @@ body {
     }
 }
 
-
+#connect {
+    display: flex;
+    flex-direction: row;
+}
+#connect > form {
+    flex: 1;
+}
+#connect > img {
+    margin: auto 0 auto 2rem;
+    border-radius: 8px;
+}
+@media screen and (orientation: portrait) {
+    #connect {
+        flex-direction: column;
+    }
+    #connect > img {
+        margin: auto;
+        width: 100px;
+    }
+}
 
 
 form > * {
