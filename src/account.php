@@ -30,7 +30,11 @@ if ($user == null) {
                 </div>
                 <h2 style="clear: both;">Compte connecté à :</h2>
                 <ul>
-                    <?php foreach (sendRequest("SELECT * FROM `TOKENS` WHERE `user` = '".$user['id']."'") as $token) { ?>
+                    <?php
+                    $tokens = sendRequest("SELECT * FROM `TOKENS` WHERE `user` = '".$user['id']."'");
+                    if ($tokens->num_rows == 0) echo "<li>Aucune application connectée</li>";
+                    else while ($token = $tokens->fetch_assoc()) {
+                    ?>
                     <li>
                         <?=$token['app']?> depuis le
                         <time datetime="<?=$token['date']?>"><?=explode(' ', $token['date'])[0]?></time>

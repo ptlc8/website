@@ -18,7 +18,7 @@
 	</head>
 	<body>
         <?php if (date('n') == 4 && date('j') == 1) echo '<div id="april-fool"></div>'; ?>
-		<div id="triptych" class="triptych">
+		<div id="triptych" class="triptych"></div>
 		<script src="triptych.js" async></script>
 	</body>
 </html>

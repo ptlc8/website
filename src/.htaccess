@@ -1,20 +1,3 @@
-
-# HTID:11048304: DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES BELOW
-php_value display_errors 1
-# DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES ABOVE HTID:11048304:
-
 #errors
 ErrorDocument 403 /errors/403.html
 ErrorDocument 404 /errors/404.html
-
-#turn on url rewriting 
-RewriteEngine on
-
-#remove the need for .php extention 
-RewriteCond %{REQUEST_FILENAME} !-d 
-RewriteCond %{REQUEST_FILENAME}\.php -f 
-RewriteRule ^(.*)$ $1.php
-
-#les assets de cards-dev sont ceux de cards
-RewriteEngine on
-RewriteRule ^cards-dev/assets/(.*)$ cards/assets/$1
