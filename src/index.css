@@ -32,6 +32,7 @@ html, body {
 .triptych > .tab:hover {
 	z-index: 10;
 	box-shadow: black 0 0 16px;
+	animation: rainbow-shadow 12s linear infinite;
 }
 @media (orientation: portrait) {
 	.triptych > .tab {
@@ -97,6 +98,15 @@ html, body {
 }
 .triptych a:hover {
 	text-decoration: underline;
+}
+@keyframes rainbow-shadow {
+	0% { box-shadow: 0px 0px 1em #ff0; }
+	16.666% { box-shadow: 0px 0px 1em #0f0; }
+	33.333% { box-shadow: 0px 0px 1em #0ff; }
+	50% { box-shadow: 0px 0px 1em #00f; }
+	66.666% { box-shadow: 0px 0px 1em #f0f; }
+	83.333% { box-shadow: 0px 0px 1em #f00; }
+	100% { box-shadow: 0px 0px 1em #ff0; }
 }
 
 .git {

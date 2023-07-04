@@ -9,29 +9,21 @@
 		<script src='https://www.hCaptcha.com/1/api.js' async defer></script>
 	</head>
 	<body>
-		<section id="connect" class="floating container">
+		<section class="floating container">
 			<form method="POST" action="" class="form">
 				<h1>Inscription</h1>
-				<div>
-					<label for="username">Nom d'utilisateur</label>
-					<input id="username" type="text" name="username" placeholder="Nom d'utilisateur (visible par tous)" <?php echo(isset($_REQUEST['username']) ? 'value="'.$_REQUEST['username'].'" ' : '') ?>required />
-				</div>
-				<div>
-					<label for="username">Adresse e-mail</label>
-					<input type="email" name="email" placeholder="Adresse e-mail (invisible pour les autres)" <?php echo(isset($_REQUEST['email']) ? 'value="'.$_REQUEST['email'].'" ' : '') ?>required />
-				</div>
-				<div>
-					<label for="username">Mot de passe</label>
-					<input type="password" name="password" placeholder="Mot de passe" required />
-					<input type="password" name="password2" placeholder="Confirmation de mot de passe" required />
-				</div>
-				<div>
-					<label for="username">Prénom et nom</label>
-					<input type="text" name="firstname" placeholder="Prénom (invisible pour les autres)" <?php echo(isset($_REQUEST['firstname']) ? 'value="'.$_REQUEST['firstname'].'" ' : '') ?>required />
-					<input type="text" name="lastname" placeholder="Nom de famille (invisible pour les autres)" <?php echo(isset($_REQUEST['lastname']) ? 'value="'.$_REQUEST['lastname'].'" ' : '') ?>required />
-				</div>
+				<label for="username">Nom d'utilisateur</label>
+				<input id="username" type="text" name="username" placeholder="Nom d'utilisateur (visible par tous)" <?php echo(isset($_REQUEST['username']) ? 'value="'.$_REQUEST['username'].'" ' : '') ?>required />
+				<label for="username">Adresse e-mail</label>
+				<input type="email" name="email" placeholder="Adresse e-mail (invisible pour les autres)" <?php echo(isset($_REQUEST['email']) ? 'value="'.$_REQUEST['email'].'" ' : '') ?>required />
+				<label for="username">Mot de passe</label>
+				<input type="password" name="password" placeholder="Mot de passe" required />
+				<input type="password" name="password2" placeholder="Confirmation de mot de passe" required />
+				<label for="username">Prénom et nom</label>
+				<input type="text" name="firstname" placeholder="Prénom (invisible pour les autres)" <?php echo(isset($_REQUEST['firstname']) ? 'value="'.$_REQUEST['firstname'].'" ' : '') ?>required />
+				<input type="text" name="lastname" placeholder="Nom de famille (invisible pour les autres)" <?php echo(isset($_REQUEST['lastname']) ? 'value="'.$_REQUEST['lastname'].'" ' : '') ?>required />
 				<?php
-				include('init.php');
+				include('api/init.php');
 				if(defined('HCAPTCHA_SECRET')) { ?>
 				<div>
 					<label for="username">Vérification</label>
@@ -58,7 +50,7 @@
 					/*else if($_REQUEST['username']!=htmlspecialchars($_REQUEST['username'])){ // Noramalement les injections XSS avec le pseudo sont gérer (du moins sur Poképrof)
 						echo '<p class="error">Votre nom contient des caractères invalides 👺!';*/
 					// Teste si le captcha a bien été résolu
-					else if (!isset($_REQUEST['h-captcha-response']) || empty($_REQUEST['h-captcha-response']))
+					else if (defined('HCAPTCHA_SECRET') && (!isset($_REQUEST['h-captcha-response']) || empty($_REQUEST['h-captcha-response'])))
 						echo '<p class="error">Il faut que tu complètes le captcha juste au dessus 👾';
 					// Teste si le captcha a été résolu avec succès
 					else if (defined('HCAPTCHA_SECRET') && !json_decode(file_get_contents('https://hcaptcha.com/siteverify?secret='.HCAPTCHA_SECRET.'&response='.$_POST['h-captcha-response'].'&remoteip='.$_SERVER['REMOTE_ADDR']))->success)
@@ -79,8 +71,7 @@
 					}
 				}
 				?>
-				
-				<p><a href="connect.php<?php echo isset($_REQUEST['go']) ? '?go='.urlencode($_REQUEST['go']) : (isset($_REQUEST['closeafter']) ? '?closeafter' : ''); ?><?php echo isset($_REQUEST['icon']) ? '?icon='.urlencode($_REQUEST['icon']) : ''; ?>">J'ai déjà un compte</a></p>
+				<a class="large" href="login.php<?php echo isset($_REQUEST['go']) ? '?go='.urlencode($_REQUEST['go']) : (isset($_REQUEST['closeafter']) ? '?closeafter' : ''); ?><?php echo isset($_REQUEST['icon']) ? '?icon='.urlencode($_REQUEST['icon']) : ''; ?>">J'ai déjà un compte</a>
 			</form>
 			<?php if (isset($_REQUEST['icon'])) { ?><img width="200" src="<?= $_REQUEST['icon'] ?>" /><?php } ?>
 		</section>

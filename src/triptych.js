@@ -14,7 +14,7 @@ window.addEventListener("load", function() {
                         return createElement("a", {href:subsite.link||"#"}, subsite.title);
                     }).concat(
                         subsite.git ? createElement("a", {className:"git", href:subsite.git}, [
-                            createElement("img", {src:"git.png", height:"32"})
+                            createElement("img", {src:"assets/git.png", height:"32"})
                         ]) : []
                     ))
                 ]

@@ -1,6 +1,7 @@
-*
-.gitignore
-!errors
-!*.*
-sitemap.json
-credentials.php
+src/*
+!src/errors
+!src/api
+!src/assets
+!src/*.*
+src/sitemap.json
+src/api/credentials.php

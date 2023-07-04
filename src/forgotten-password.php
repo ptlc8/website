@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -11,7 +10,7 @@
 	<body>
 		<section class="floating container">
 			<?php
-			include('init.php');
+			include('api/init.php');
 			// si un token de réinitialisation de mot de passe est fourni
 			if (isset($_REQUEST['token'])) {
 				$result = sendRequest("SELECT * FROM FORGOTREQUEST JOIN USERS ON USERS.id = FORGOTREQUEST.userId WHERE token = '", $_REQUEST['token'], "'");
@@ -19,7 +18,7 @@
 				if ($result->num_rows === 0)
 					printMessage('Cette requête n\'existe pas ou a expirée 🤕');
 				// demande du nouveau mot de passe s'il nest pas fourni
-				if (!isset($_REQUEST['password'], $_REQUEST['password2']))
+				else if (!isset($_REQUEST['password'], $_REQUEST['password2']))
 					queryNewPassword();
 				else { // changement de mot de passe sauf s'il est trop court ou si les mots de passe ne sont pas identiques
 					if (strlen($_REQUEST['password']) < 4) {
@@ -29,7 +28,8 @@
 					} else {
 						$hashed_password = hash('sha512', $_POST['password']);
 						sendRequest("UPDATE `USERS` JOIN FORGOTREQUEST ON USERS.id = FORGOTREQUEST.userId SET `password` = '", $hashed_password, "' WHERE token = '", $_REQUEST['token'], "'");
-						printMessage('Ton mot de passe a bien été modifié 🥳', '<a href="connect.php">Je me reconnecte</a>');
+						sendRequest("DELETE FROM FORGOTREQUEST WHERE token = '", $_REQUEST['token'], "'");
+						printMessage('Ton mot de passe a bien été modifié 🥳', '<a class="large" href="login.php">Je me reconnecte</a>');
 					}
 				}
 			} else {
@@ -45,10 +45,16 @@
 					if ($result->num_rows !== 0) {
 						$account = $result->fetch_assoc();
 						$email = $account['email'];
-						do $token = createToken(32); while (sendRequest("SELECT * FROM FORGOTREQUEST WHERE token = ', $token, '")->num_rows !== 0);
-						sendRequest("INSERT INTO `FORGOTREQUEST` (`userId`, `token`, `expire`) VALUES ('", $account['id'], "', '", $token, "', CURDATE() + INTERVAL 7 DAY)");
-						mail($email, '<'.$_SERVER['HTTP_HOST'].'> Récupération de ton mot de passe', '<div style="text-align: center;">Salut être vivant,<br />J\'ai appris que tu avais perdu ton mot de passe,<br />C\'est pas cool<br />Heureuseument je suis là<br />J\'ai donc concocté pour toi un petit lien :<br /><a href="http://'.$_SERVER['HTTP_HOST'].'/forgotten-password.php?token='.$token.'">CLIQUE-MOI !</a><br />Celui-ci te permettra de le changer<br />Mais attention, il n\'es valable que 7 jours<br />(c\'est beaucoup)<br />Sur ce, passe une bonne journée.', 'From:contact@'.$_SERVER['HTTP_HOST'].'\r\nMIME-Version: 1.0\r\nContent-type: text/html; charset=utf-8\r\n');
-						printMessage('Un mail à été envoyé à l\'adresse '.preg_replace('/(?<=.{4}).(?=.*@)/', '*', $email).'. 😜', 'Dans celui-ci vous trouverez un lien pour changer votre mot de passe.');
+						$name = $account['name'];
+						do $token = createToken(32);
+						while (sendRequest("SELECT * FROM FORGOTREQUEST WHERE token = ', $token, '")->num_rows !== 0);
+						sendRequest("REPLACE INTO `FORGOTREQUEST` (`userId`, `token`, `expire`) VALUES ('", $account['id'], "', '", $token, "', CURDATE() + INTERVAL 7 DAY)");
+						$url = 'http://'.$_SERVER['HTTP_HOST'].'/forgotten-password.php?token='.$token;
+						$success = mail($email, '<'.$_SERVER['HTTP_HOST'].'> Récupération de ton mot de passe', '<div style="text-align: center;">Salut '.htmlspecialchars($name).',<br />J\'ai appris que tu avais perdu ton mot de passe,<br />C\'est pas cool<br />Heureuseument je suis là<br />J\'ai donc concocté pour toi un petit lien :<br /><a href="'.$url.'">CLIQUE-MOI !</a><br />Celui-ci te permettra de le changer<br />Mais attention, il n\'es valable que 7 jours<br />(c\'est beaucoup)<br />Sur ce, passe une bonne journée.', 'From:contact@'.$_SERVER['HTTP_HOST'].'\r\nMIME-Version: 1.0\r\nContent-type: text/html; charset=utf-8\r\n');
+						if ($success)
+							printMessage('Un mail à été envoyé à l\'adresse '.preg_replace('/(?<=.{4}).(?=.*@)/', '*', $email).'. 😜', 'Dans celui-ci tu trouveras un lien pour changer votre mot de passe.');
+						else
+							printMessage('Une erreur est survenue lors de l\'envoi du mail. 😵', 'Tu peux envoyer un mail à '.$_SERVER['SERVER_ADMIN']);
 					} else {
 						queryUsername('Le nom d\'utilisateur est inconnu');
 					}
@@ -58,7 +64,7 @@
 			function queryUsername($error='') {
 				?>
 				<form method="POST" action="" class="form">
-					<h1 class="title">Mot de passe oublié</h1>
+					<h1>Mot de passe oublié</h1>
 					<input name="username" type="text" placeholder="Nom d'utilisateur" required />
 					<?php if(defined('HCAPTCHA_SECRET')) { ?>
 					<div class="h-captcha" data-sitekey="bdea39ea-e2c6-49a8-aff4-800d01b0d6ac"></div>
@@ -71,7 +77,7 @@
 			function queryNewPassword($error='') {
 				?>
 				<form method="POST" action="?token=<?php echo $_REQUEST['token']; ?>" class="form">
-					<h1 class="title">Mot de passe oublié</h1>
+					<h1>Mot de passe oublié</h1>
 					<input name="password" type="password" placeholder="Nouveau mot de passe" required />
 					<input name="password2" type="password" placeholder="Confirmation du mot de passe" required />
 					<input type="submit" value="Changer de mot de passe" />
