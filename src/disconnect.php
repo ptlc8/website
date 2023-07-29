@@ -16,6 +16,10 @@
 				<a href="javascript:history.back()">🔙 Revenir en arrière</a>
 				<a href=".">🏠 Retouner à la page d'accueil </a>
 			</div>
+			<?php } else if (($app = sendRequest("SELECT * FROM APPS WHERE id = '", $_REQUEST['app'], "';")->fetch_assoc()) == null) { ?>
+				<h1>Euh... Cette application n'existe pas 🤓</h1>
+				<a href="javascript:history.back()">🔙 Revenir en arrière</a>
+				<a href=".">🏠 Retouner à la page d'accueil</a>
 			<?php } else if (($user = login()) == null) {
 				header("Location: login.php?go=".urlencode($_SERVER['REQUEST_URI']));
 			} else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -28,27 +32,28 @@
 					<script>window.history.go(-2);</script>
 				<?php } ?>
 				<div>
-					<h1><u><?=htmlspecialchars($_REQUEST['app'])?></u> déconnecté</h1>
+					<h1><u><?=htmlspecialchars($app['name'])?></u> déconnecté</h1>
 					<p class="helper">Cette application a été déconnecté de ton compte. 😢</p>
 				</div>
 			<?php } else { ?>
 			<form method="post" action="">
-				<h1>Déconnecter de <u><?=htmlspecialchars($_REQUEST['app'])?></u></h1>
+				<h1>Déconnecter de <u><?=htmlspecialchars($app['name'])?></u></h1>
 				<div class="connection">
 					<?=htmlspecialchars($user['name'])?>
 					<img width="50" src="avatar.php">
 					❌
-					<img width="50" src="<?= $_REQUEST['icon'] ?? '' ?>" />
-					<?=htmlspecialchars($_REQUEST['app'])?>
+					<img width="50" src="<?= $app['icon'] ?? '' ?>" />
+					<?=htmlspecialchars($app['name'])?>
 				</div>
-				<span class="error"><u><?=htmlspecialchars($_REQUEST['app'])?></u> n'aura plus accès à :</span>
+				<span class="error"><u><?=htmlspecialchars($app['name'])?></u> n'aura plus accès à :</span>
 				<ul>
 					<li>ton nom d'utilisateur et ton id</li>
-					<li>ton adresse e-mail</li>
+					<!--<li>ton adresse e-mail</li>-->
 				</ul>
-				<input type="submit" value="Déconnecter" />
+				<input type="submit" value="Déconnecter" class="bad" />
 			</form>
 			<?php } ?>
 		</section>
+		<?php if (isset($app)) { ?><div class="custom-background" style="background-image: url('<?=addslashes($app['background'])?>');"></div><?php } ?>
 	</body>
 </html>

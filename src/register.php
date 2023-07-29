@@ -30,7 +30,7 @@
 					<div class="h-captcha" data-sitekey="bdea39ea-e2c6-49a8-aff4-800d01b0d6ac"></div>
 				</div>
 				<?php } ?>
-				<input type="submit" value="S'inscrire" />
+				<input type="submit" class="good" value="S'inscrire" />
 				
 				<?php
 				if (isset($_REQUEST['username'], $_REQUEST['email'], $_REQUEST['password'], $_REQUEST['password2'], $_REQUEST['firstname'], $_REQUEST['lastname'])) {
@@ -63,17 +63,17 @@
 						$_SESSION['password'] = $hashed_password;
 						if (isset($_REQUEST['go'])) {
 							header('Location: '.$_REQUEST['go']);
-						} else if (isset($_REQUEST['closeafter'])) {
-							echo('<script>window.close();</script><p class="helper">Tu es maintenant inscrit(e), tu peux fermer cette onglet. 🎉</p>');
-						} else {
+						} else if (isset($_REQUEST['closeafter'])) { ?>
+				<script>window.close();</script>
+				<p class="helper">Tu es maintenant inscrit(e), tu peux fermer cette onglet. 🎉</p>
+						<?php } else {
 							header('Location: .');
 						}
 					}
 				}
 				?>
-				<a class="large" href="login.php<?php echo isset($_REQUEST['go']) ? '?go='.urlencode($_REQUEST['go']) : (isset($_REQUEST['closeafter']) ? '?closeafter' : ''); ?><?php echo isset($_REQUEST['icon']) ? '?icon='.urlencode($_REQUEST['icon']) : ''; ?>">J'ai déjà un compte</a>
+				<a class="large" href="login.php<?php echo isset($_REQUEST['go']) ? '?go='.urlencode($_REQUEST['go']) : (isset($_REQUEST['closeafter']) ? '?closeafter' : ''); ?>">J'ai déjà un compte</a>
 			</form>
-			<?php if (isset($_REQUEST['icon'])) { ?><img width="200" src="<?= $_REQUEST['icon'] ?>" /><?php } ?>
 		</section>
 	</body>
 </html>

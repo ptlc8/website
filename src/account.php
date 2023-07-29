@@ -28,15 +28,19 @@ if ($user == null) {
                         <tr><td>Nom : </td><td><?=htmlspecialchars($user['lastName'])?></td></tr>
                     </table>
                 </div>
-                <h2 style="clear: both;">Compte connecté à :</h2>
+                <h2 style="clear: both;">Applications connectées :</h2>
                 <ul>
                     <?php
-                    $tokens = sendRequest("SELECT * FROM `TOKENS` WHERE `user` = '".$user['id']."'");
-                    if ($tokens->num_rows == 0) echo "<li>Aucune application connectée</li>";
+                    $tokens = sendRequest("SELECT * FROM `TOKENS` JOIN `APPS` ON app = id WHERE `user` = '".$user['id']."'");
+                    if ($tokens->num_rows == 0) echo "Aucune application connectée";
                     else while ($token = $tokens->fetch_assoc()) {
                     ?>
                     <li>
-                        <?=$token['app']?> depuis le
+                        <a href="<?=$token['url']?>">
+                            <img height="20" src="<?=$token['icon']?>" />
+                            <?=$token['name']?>
+                        </a>
+                        depuis le
                         <time datetime="<?=$token['date']?>"><?=explode(' ', $token['date'])[0]?></time>
                         <a class="bad" href="disconnect.php?back&app=<?=$token['app']?>">Déconnecter</a></li>
                     <?php } ?>

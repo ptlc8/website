@@ -69,7 +69,7 @@
 					<?php if(defined('HCAPTCHA_SECRET')) { ?>
 					<div class="h-captcha" data-sitekey="bdea39ea-e2c6-49a8-aff4-800d01b0d6ac"></div>
 					<?php } ?>
-					<input type="submit" value="Changer de mot de passe" />
+					<input type="submit" value="Changer de mot de passe" class="good" />
 					<?php if ($error!='') echo "<p style='color: red;'>$error</p>"; ?>
 				</form>
 				<?php
@@ -80,7 +80,7 @@
 					<h1>Mot de passe oublié</h1>
 					<input name="password" type="password" placeholder="Nouveau mot de passe" required />
 					<input name="password2" type="password" placeholder="Confirmation du mot de passe" required />
-					<input type="submit" value="Changer de mot de passe" />
+					<input type="submit" value="Changer de mot de passe" class="good" />
 					<?php if ($error!='') echo '<p class="error">'.$error.'</p>'; ?>
 				</form>
 				<?php

@@ -16,7 +16,7 @@
 				<input id="username" name="username" type="text" placeholder="Nom d'utilisateur" <?php echo(isset($_REQUEST['username']) ? 'value="'.$_REQUEST['username'].'" ' : '') ?> autocomplete="name" autofocus />
 				<label for="password">Mot de passe</label>
 				<input id="password" name="password" type="password" placeholder="Mot de passe" autocomplete="current-password" />
-				<input type="submit" value="Se connecter" />
+				<input type="submit" value="Se connecter" class="good" />
 				
 				<?php
 				include("api/init.php");
@@ -29,18 +29,18 @@
 						$_SESSION['password'] = $hashed_password;
 						if (isset($_REQUEST['go'])) {
 							header('Location: '.$_REQUEST['go']);
-						} else if (isset($_REQUEST['closeafter'])) {
-							echo('<script>window.close();</script><p class="helper">Vous êtes connecté(e), vous pouvez fermer cet onglet. 🎉</p>');
-						} else{
+						} else if (isset($_REQUEST['closeafter'])) { ?>
+							<script>window.close();</script>
+							<p class="helper">Vous êtes connecté(e), vous pouvez fermer cet onglet. 🎉</p>
+						<?php } else{
 							header('Location: .');
 						}
 					}
 				}
 				?>
-				<a class="large" href="register.php<?php echo isset($_REQUEST['go']) ? '?go='.urlencode($_REQUEST['go']) : (isset($_REQUEST['closeafter']) ? '?closeafter' : '?'); ?><?php echo isset($_REQUEST['icon']) ? '&icon='.urlencode($_REQUEST['icon']) : ''; ?>">Je me connecte pour la première fois</a>
+				<a class="large" href="register.php<?php echo isset($_REQUEST['go']) ? '?go='.urlencode($_REQUEST['go']) : (isset($_REQUEST['closeafter']) ? '?closeafter' : '?'); ?>">Je me connecte pour la première fois</a>
 				<a class="large" href="forgotten-password.php">J'ai oublié mon mot de passe</a>
 			</form>
-			<?php if (isset($_REQUEST['icon'])) { ?><img width="200" src="<?= $_REQUEST['icon'] ?>" /><?php } ?>
 		</section>
 	</body>
 </html>
