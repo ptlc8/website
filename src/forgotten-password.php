@@ -29,7 +29,7 @@
 						$hashed_password = hash('sha512', $_POST['password']);
 						sendRequest("UPDATE `USERS` JOIN FORGOTREQUEST ON USERS.id = FORGOTREQUEST.userId SET `password` = '", $hashed_password, "' WHERE token = '", $_REQUEST['token'], "'");
 						sendRequest("DELETE FROM FORGOTREQUEST WHERE token = '", $_REQUEST['token'], "'");
-						printMessage('Ton mot de passe a bien été modifié 🥳', '<a class="large" href="login.php">Je me reconnecte</a>');
+						printMessage('Ton mot de passe a bien été modifié 🥳', '<a class="large" href="login.php">🔑 Je me reconnecte</a>');
 					}
 				}
 			} else {

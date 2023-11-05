@@ -11,11 +11,9 @@
 			<?php
 			include("api/init.php");
 			if (!isset($_REQUEST['app'])) { ?>
-			<div>
 				<h1>Mmh... Cette page a été mal appelée 🤯</h1>
 				<a href="javascript:history.back()">🔙 Revenir en arrière</a>
 				<a href=".">🏠 Retouner à la page d'accueil </a>
-			</div>
 			<?php } else if (($app = sendRequest("SELECT * FROM APPS WHERE id = '", $_REQUEST['app'], "';")->fetch_assoc()) == null) { ?>
 				<h1>Euh... Cette application n'existe pas 🤓</h1>
 				<a href="javascript:history.back()">🔙 Revenir en arrière</a>
@@ -31,10 +29,8 @@
 				<?php } else if (isset($_REQUEST['back'])) { ?>
 					<script>window.history.go(-2);</script>
 				<?php } ?>
-				<div>
-					<h1><u><?=htmlspecialchars($app['name'])?></u> déconnecté</h1>
-					<p class="helper">Cette application a été déconnecté de ton compte. 😢</p>
-				</div>
+				<h1><u><?=htmlspecialchars($app['name'])?></u> déconnecté</h1>
+				<p class="helper">Cette application a été déconnecté de ton compte. 😢</p>
 			<?php } else { ?>
 			<form method="post" action="">
 				<h1>Déconnecter de <u><?=htmlspecialchars($app['name'])?></u></h1>

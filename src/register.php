@@ -72,7 +72,7 @@
 					}
 				}
 				?>
-				<a class="large" href="login.php<?php echo isset($_REQUEST['go']) ? '?go='.urlencode($_REQUEST['go']) : (isset($_REQUEST['closeafter']) ? '?closeafter' : ''); ?>">J'ai déjà un compte</a>
+				<a class="large" href="login.php<?php echo isset($_REQUEST['go']) ? '?go='.urlencode($_REQUEST['go']) : (isset($_REQUEST['closeafter']) ? '?closeafter' : ''); ?>">👤 J'ai déjà un compte</a>
 			</form>
 		</section>
 	</body>

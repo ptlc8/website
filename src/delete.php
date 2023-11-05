@@ -16,17 +16,15 @@
 			} else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				sendRequest("DELETE FROM `USERS` WHERE `id` = '", $user['id'], "';");
 			?>
-			<div>
 				<h1>Compte supprimé</h1>
 				<p class="helper">Ton compte a bien été supprimé. 😫</p>
 				<a href=".">🏠 Retouner à la page d'accueil</a>
-			</div>
 			<?php } else { ?>
-			<form method="post" action="">
-				<h1>Supprimer ton compte</h1>
-				<span class="error">⚠ Cette action est irréversible</span>
-				<input type="submit" value="Supprimer mon compte" class="bad" />
-			</form>
+				<form method="post" action="">
+					<h1>Supprimer ton compte</h1>
+					<span class="error">⚠ Cette action est irréversible</span>
+					<input type="submit" value="Supprimer mon compte" class="bad" />
+				</form>
 			<?php } ?>
 		</section>
 	</body>
