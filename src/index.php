@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>Ambi.dev - ex CY Hub - ex agnd - Partage de projets</title>
-		<link rel="stylesheet" href="index.css" />
-		<meta name="viewport" content="width=device-width, initial-scale=0.5" />
+		<link rel="stylesheet" href="index.css" media="print" onload="this.media='all'" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="shortcut icon" href="favicon.ico" />
 		<meta name="language" content="fr-FR" />
 		<meta name="sitename" content="ambi.dev" />

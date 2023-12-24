@@ -24,20 +24,15 @@ html, body {
 .triptych > .tab {
 	overflow: hidden;
 	flex-grow: 1;
-	width: 25rem;
+	width: 25em;
 	position: relative;
-	min-height: 8rem;
-	font-size: 2em;
+	min-height: 8em;
+
 }
 .triptych > .tab:hover {
 	z-index: 10;
-	box-shadow: black 0 0 16px;
+	box-shadow: black 0 0 1em;
 	animation: rainbow-shadow 12s linear infinite;
-}
-@media (orientation: portrait) {
-	.triptych > .tab {
-		width: 20rem;
-	}
 }
 
 .triptych > .tab > .head {
@@ -69,7 +64,8 @@ html, body {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	gap: 1rem
+	gap: 2px;
+	font-size: 1.5em;
 }
 .triptych .tab:hover .detail {
 	left: 0;
@@ -77,46 +73,47 @@ html, body {
 
 
 .triptych > .tab > .head img, .triptych > .tab > .head canvas {
-	max-height: 6rem;
-	max-width: 8rem;
+	max-height: 6em;
+	max-width: 8em;
 	filter: drop-shadow(1px 2px 5px rgba(0,0,0,0.2));
 	user-select: none;
-	padding: 1rem;
+	padding: 1em;
 	width: auto;
 }
 .triptych > .tab > .head .title {
 	user-select: none;
-	padding: 1rem;
+	padding: 1em;
+	font-size: 2em;
 }
 
 .triptych a {
 	text-decoration: none;
 	color: black;
 	background-color: #fff3;
-	border-radius: 8px;
-	padding: 4px;
+	border-radius: .5em;
+	padding: .25em;
 }
 .triptych a:hover {
 	text-decoration: underline;
 }
 @keyframes rainbow-shadow {
-	0% { box-shadow: 0px 0px 1em #ff0; }
-	16.666% { box-shadow: 0px 0px 1em #0f0; }
-	33.333% { box-shadow: 0px 0px 1em #0ff; }
-	50% { box-shadow: 0px 0px 1em #00f; }
-	66.666% { box-shadow: 0px 0px 1em #f0f; }
-	83.333% { box-shadow: 0px 0px 1em #f00; }
-	100% { box-shadow: 0px 0px 1em #ff0; }
+	0% { box-shadow: 0 0 1em #ff0; }
+	16.666% { box-shadow: 0 0 1em #0f0; }
+	33.333% { box-shadow: 0 0 1em #0ff; }
+	50% { box-shadow: 0 0 1em #00f; }
+	66.666% { box-shadow: 0 0 1em #f0f; }
+	83.333% { box-shadow: 0 0 1em #f00; }
+	100% { box-shadow: 0 0 1em #ff0; }
 }
 
 .git {
 	position: absolute;
-	bottom: 1rem;
-	right: 1rem;
-	line-height: 1rem;
+	bottom: .5em;
+	right: .5em;
 }
 .git > img {
-	height: 2rem;
+	height: 1em;
+	vertical-align: middle;
 }
 
 .yellow {background-color: #fcf790;}
