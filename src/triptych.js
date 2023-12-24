@@ -1,5 +1,5 @@
 "use strict";
-window.addEventListener("load", function () {
+{
     var triptych = document.getElementById("triptych");
     sendRequest("GET", "sitemap.json").then(function (r) {
         var sitemap = JSON.parse(r);
@@ -21,4 +21,4 @@ window.addEventListener("load", function () {
             ));
         }
     });
-});
+}
