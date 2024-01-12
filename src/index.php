@@ -14,10 +14,9 @@
 		<meta name="copyright" content="Ambi / PTLC - Tous droits réservés" />
 		<meta name="author" content="Ambi alias PTLC" />
 		<link rel="canonical" href="https://ambi.dev/" />
-		<script src="utils.js" async></script>
 	</head>
 	<body>
-        <?php if (date('n') == 4 && date('j') == 1) echo '<div id="april-fool"></div>'; ?>
+		<?php if (date('n') == 4 && date('j') == 1) echo '<div id="april-fool"></div>'; ?> 
 		<div id="triptych" class="triptych"></div>
 		<script src="triptych.js" async></script>
 	</body>
