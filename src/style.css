@@ -101,9 +101,11 @@ form > [type=submit] {
 
 form > .helper {
     color: green;
+    text-align: center;
 }
 form > .error {
     color: red;
+    text-align: center;
 }
 
 td:first-child {

@@ -11,7 +11,6 @@
 		<section class="floating container">
 			<form method="post" action="">
 				<h1>Connexion</h1>
-				<p class="helper">(Les identifiants de l'ex agnd.fr, de cy-hub.fr et de ambi.dev sont les mêmes)</p>
 				<label for="username">Nom d'utilisateur</label>
 				<input id="username" name="username" type="text" placeholder="Nom d'utilisateur" <?php echo(isset($_REQUEST['username']) ? 'value="'.$_REQUEST['username'].'" ' : '') ?> autocomplete="name" autofocus />
 				<label for="password">Mot de passe</label>
