@@ -7,7 +7,7 @@ if (!isset($_REQUEST['token'])) {
 $token = $_REQUEST['token'];
 
 include("init.php");
-$result = sendRequest("SELECT id, name FROM `USERS` JOIN `TOKENS` ON `USERS`.`id` = `TOKENS`.`user` WHERE `token` = '", $token, "';");
+$result = request_database("SELECT id, name FROM `USERS` JOIN `TOKENS` ON `USERS`.`id` = `TOKENS`.`user` WHERE `token` = '", $token, "';");
 $user = $result->fetch_assoc();
 
 if ($user == null) {

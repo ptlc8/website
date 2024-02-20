@@ -8,10 +8,10 @@ if ($mysqli->connect_errno) {
 }
 
 // fonction de requête BDD
-function sendRequest(...$requestFrags) {
+function request_database(...$request_frags) {
 	$request = '';
 	$var = false;
-	foreach ($requestFrags as $frag) {
+	foreach ($request_frags as $frag) {
 		$request .= ($var ? str_replace(array('\\', '\''), array('\\\\', '\\\''), $frag) : $frag);
 		$var = !$var;
 	}
@@ -25,25 +25,32 @@ function sendRequest(...$requestFrags) {
 	return $result;
 }
 
-// connexion à un compte
-function login($force=false) {
-    session_start();
-    if (!isset($_SESSION['username'], $_SESSION['password']) || ($userRequest = sendRequest("SELECT * FROM USERS WHERE `name` = '", $_SESSION['username'], "' and `password` = '", $_SESSION['password'], "'"))->num_rows === 0) {
-        if ($force)
-            exit("not logged");
-    	return null;
-    } else {
-    	$user = $userRequest->fetch_assoc();
-    }
-    return $user;
+// connexion à un compte avec la session
+function login_from_session() {
+	session_start();
+	if (!isset($_SESSION['username'], $_SESSION['password']))
+		return null;
+    return request_database("SELECT * FROM USERS WHERE `name` = '", $_SESSION['username'], "' and `password` = '", $_SESSION['password'], "'")->fetch_assoc();
+}
+
+// connexion à un compte avec un nom d'utilisateur et un mot de passe
+function login($username, $password) {
+	session_start();
+	$password = hash('sha512', $password);
+    $user = request_database("SELECT * FROM USERS WHERE `name` = '", $username, "' and `password` = '", $password, "'")->fetch_assoc();
+	if ($user !== null) {
+		$_SESSION['username'] = $username;
+		$_SESSION['password'] = $password;
+	}
+	return $user;
 }
 
 // générer un token
-function generateToken($length=32) {
+function generate_token($length=32) {
 	$token = '';
 	$chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-';
 	for ($i = 0; $i < $length; $i++)
-		$token .= $chars[rand(0, strlen($chars))];
+		$token .= $chars[rand(0, strlen($chars) - 1)];
 	return $token;
 }
 ?>

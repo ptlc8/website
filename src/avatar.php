@@ -3,20 +3,14 @@
 include("api/init.php");
 
 if (isset($_REQUEST['id'])) {
-    $result = sendRequest("SELECT * FROM `USERS` WHERE `id` = '", $_REQUEST['id'], "';");
-    if ($result->num_rows == 0)
-    $user = null;
-    else
-        $user = $result->fetch_assoc();
-    } else {
-    $user = login();
+    $user = request_database("SELECT * FROM `USERS` WHERE `id` = '", $_REQUEST['id'], "';")->fetch_assoc();
+} else {
+    $user = login_from_session();
 }
 
 if ($user == null) {
-    header("Location: assets/unset.png");
-    exit;
+    exit(header("Location: assets/unset.png"));
 }
-
-header("Location: https://www.gravatar.com/avatar/".md5(strtolower(trim($user['email'])))."?s=200&d=robohash&r=pg");
+exit(header("Location: https://www.gravatar.com/avatar/".md5(strtolower(trim($user['email'])))."?s=200&d=robohash&r=pg"));
 
 ?>

@@ -1,12 +1,10 @@
-<?php session_start();
+<?php
 include("init.php");
 if (isset($_REQUEST['username'], $_POST['password'])) {
-	$hashed_password = hash('sha512', $_POST['password']);
-	if (sendRequest("SELECT * FROM USERS WHERE `name` = '", $_REQUEST['username'], "' and `password` = '", $hashed_password, "'")->num_rows === 0) {
+	$user = login($_REQUEST['username'], $_POST['password']);
+	if ($user === null) {
 		echo("invalid");
 	} else {
-		$_SESSION['username'] = $_REQUEST['username'];
-		$_SESSION['password'] = $hashed_password;
 		echo("logged in");
 	}
 } else {
