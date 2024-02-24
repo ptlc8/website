@@ -3,7 +3,10 @@
 	<head>
 		<meta charset="UTF-8" />
 		<title>Ambi.dev - Partage de projets</title>
-		<link rel="stylesheet" href="index.css" media="print" onload="this.media='all'" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="style.css" />
+		<link rel="stylesheet" href="index.css" />
+		<script src="index.js" async defer></script>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="shortcut icon" href="favicon.ico" />
 		<meta name="language" content="fr-FR" />
@@ -16,8 +19,16 @@
 		<link rel="canonical" href="https://ambi.dev/" />
 	</head>
 	<body>
-		<?php if (date('n') == 4 && date('j') == 1) echo '<div id="april-fool"></div>'; ?> 
-		<div id="triptych" class="triptych"></div>
-		<script src="triptych.js" async></script>
+		<?php if (date('n') == 4 && date('j') == 1) echo '<div id="april-fool"></div>'; ?>
+		<header>
+			<h1>Ambi.dev</h1>
+			<a href=".">Projets</a>
+			<a href="#">Serveur</a>
+			<a href="account.php" class="account">
+				Mon compte
+				<img src="avatar.php" alt="avatar" width="64" height="64" />
+			</a>
+		</header>
+		<div id="projects" class="deck"></div>
 	</body>
 </html>

@@ -11,27 +11,27 @@ function createElement(tag, properties = {}, inner = [], eventListeners = {}) {
     return el;
 }
 
-{
-    var triptych = document.getElementById("triptych");
-    fetch("sitemap.json")
-        .then(r => r.json())
-        .then(sitemap => {
-            for (var subsite of sitemap) {
-                triptych.appendChild(createElement("div", { className: "tab", style: { backgroundColor: subsite.color } },
+
+fetch("sitemap.json")
+    .then(r => r.json())
+    .then(sitemap => {
+        for (var subsite of sitemap) {
+            let id = subsite.title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+            document.getElementById("projects")
+                .appendChild(createElement("div", { className: "card", id, style: { backgroundColor: subsite.color } },
                     [
+                        createElement("img", { className: "preview", alt: "", ...(subsite.preview ? { src: subsite.preview } : {}) }),
                         createElement("div", { className: "head" }, [
                             createElement("img", { src: subsite.img, width: "128", alt: subsite.title }),
-                            createElement("span", { className: "title" }, subsite.title),
+                            createElement("h2", { className: "title" }, subsite.title),
+                            subsite.git ? createElement("a", { className: "git", href: subsite.git }, [
+                                createElement("img", { src: "assets/git.png", height: "32", alt: "git" })
+                            ]) : ""
                         ]),
                         createElement("div", { className: "detail" }, subsite.content.map(subsite =>
                             createElement("a", { href: subsite.link || "#" }, subsite.title)
-                        ).concat(
-                            subsite.git ? createElement("a", { className: "git", href: subsite.git }, [
-                                createElement("img", { src: "assets/git.png", height: "32", alt: "git" })
-                            ]) : []
                         ))
                     ]
                 ));
-            }
-        });
-}
+        }
+    });

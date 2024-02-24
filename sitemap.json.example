@@ -1,8 +1,10 @@
 [
     {
         "color": "#09a3b5",
-        "img": "/cards/assets/back.png",
+        "img": "/pokeprof/assets/back.png",
         "title": "Poképrof",
+		"git": "https://github.com/ptlc8/pokeprof",
+		"preview": "pokeprof/screenshot.jpg",
         "content": [
             {
                 "link": "/cards",
@@ -19,28 +21,11 @@
         ]
     },
 	{
-		"color": "#db4f64",
-		"img": "/notes/favicon.ico",
-		"title": "Trucs utiles",
-		"content": [
-			{
-				"link": "/notes",
-				"title": "Calculateur de moyenne"
-			},
-			{	
-				"link": "/wheel",
-				"title": "Roue des choix"
-			},
-			{
-    			"link": "/agenda",
-				"title": "Agenda partagé"
-			}
-		]
-	},
-	{
 		"color": "#5ec05e",
 		"img": "/sm/assets/glob-lilglob.png",
 		"title": "Smash Meme",
+		"git": "https://github.com/ptlc8/smashmeme",
+		"preview": "sm/screenshot.jpg",
 		"content": [
 			{
 				"link": "/sm/play",
@@ -57,41 +42,16 @@
 		]
 	},
 	{
-		"color": "#fcf790",
-		"img":"/pcv/assets/player.png",
-		"title": "Trucs cools",
+		"color": "#db4f64",
+		"img": "/wheel/icon.png",
+		"title": "Roue des choix",
+		"git": "https://github.com/ptlc8/wheel",
+		"preview": "wheel/wheel.png",
 		"content": [
 			{
-				"link": "/story/create.html",
-				"title": "Créer une \"histoire\""
-			},
-			{
-				"link": "/pcv",
-				"title": "Jojo racing crack"
-			},
-			{
-				"link": "/dixit",
-				"title": "Dixit"
+				"link": "wheel",
+				"title": "Essayer"
 			}
 		]
 	},
-	{
-		"color": "#ca6fd6",
-		"img": "/ig/random.png",
-		"title": "Le bazar...",
-		"content": [
-			{
-				"link": "/ig",
-				"title":"Images"
-			},
-			{
-				"link": "/kart",
-				"title": "Voitures claquées"
-			},
-			{
-				"link": "/maeva",
-				"title": "Maëva"
-			}
-		]
-	}
 ]

@@ -57,7 +57,7 @@ if (!isset($_REQUEST['app'])) {
 						<img width="50" src="<?= $app['icon'] ?? '' ?>" />
 						<?= htmlspecialchars($app['name']) ?>
 					</div>
-					<span class="error"><u><?= htmlspecialchars($app['name']) ?></u> n'aura plus accès à :</span>
+					<p class="error"><u><?= htmlspecialchars($app['name']) ?></u> n'aura plus accès à :</p>
 					<ul>
 						<li>ton nom d'utilisateur et ton id</li>
 						<!--<li>ton adresse e-mail</li>-->

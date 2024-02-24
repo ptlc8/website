@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			<?php } else { ?>
 				<form method="post" action="">
 					<h1>Supprimer ton compte</h1>
-					<span class="error">⚠ Cette action est irréversible</span>
+					<p class="error">⚠ Cette action est irréversible</p>
 					<input type="submit" value="Supprimer mon compte" class="bad" />
 				</form>
 			<?php } ?>
