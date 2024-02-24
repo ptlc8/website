@@ -9,6 +9,7 @@
 * {
     --bg-color: #82b;
     --bg-color2: #ffffa4;
+    --bg-color3: #82b4df;
 }
 
 html, body {
@@ -20,10 +21,11 @@ body {
     position: relative;
     margin: 0;
     animation: animated-bg 6s ease-in-out infinite alternate, coloring-bg 3s ease-in-out infinite alternate;
-    transition: --bg-color2 5s ease-in-out;
-    background-image: radial-gradient(at 0% 0%, var(--bg-color2) 0%, transparent);
+    transition: background-color 5s ease-in-out;
+    background-image: radial-gradient(at 0% 0%, transparent 0%, var(--bg-color));
     background-size: 110% 110%;
-    background-color: var(--bg-color);
+    background-color: var(--bg-color2);
+    background-attachment: fixed;
     /*backdrop-filter: blur(8px);*/
 }
 
@@ -37,11 +39,6 @@ body {
     background: center/cover no-repeat;
 }
 
-@property --bg-color2 {
-    syntax: "<color>";
-    initial-value: white;
-    inherits: false;
-}
 @keyframes animated-bg {
     0% {
         background-position: 0 0;
@@ -52,10 +49,10 @@ body {
 }
 @keyframes coloring-bg {
     0% {
-        --bg-color2: #82b4df;
+        background-color: var(--bg-color3);
     }
     100% {
-        --bg-color2: #ffffa4;
+        background-color: var(--bg-color2);
     }
 }
 
