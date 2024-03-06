@@ -14,7 +14,8 @@ if (isset($_REQUEST['app'])) {
 			$token = generate_token(16);
 			request_database("INSERT INTO `TOKENS` (`token`, `user`, `app`) VALUES ('", $token, "', '", $user['id'], "', '", $_REQUEST['app'], "') ON DUPLICATE KEY UPDATE `token` = '", $token, "';");
 			$connected = true;
-			exit(header('Location: '.$app['returnUrl'].$token.'&'.$_REQUEST['params']));
+			$params = $_REQUEST['params'] ?? '';
+			exit(header('Location: '.$app['returnUrl'].$token.'&'.$params));
 		} else {
 			$connected = false;
 		}
