@@ -63,7 +63,7 @@ MAIL;
 					<?php } ?>
 					<input type="submit" value="Changer de mot de passe" class="good" />
 					<?php if ($error !== null) { ?>
-						<p class="error">$error</p>"; ?>
+						<p class="error"><?= $error ?></p>
 					<?php } ?>
 				</form>
 			<?php } else { ?>
