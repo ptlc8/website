@@ -73,7 +73,7 @@ if (isset($_REQUEST['username'], $_REQUEST['email'], $_REQUEST['password'], $_RE
 					<p class="error><?= $error ?></p>
 				<?php } else if ($close) { ?>
 					<script>window.close();</script>
-					<p class="helper">Tu es maintenant inscrit(e), tu peux fermer cette onglet. 🎉</p>
+					<p class="helper">Tu es maintenant inscrit(e), tu peux fermer cet onglet. 🎉</p>
 				<?php } ?>
 				<a class="large" href="login.php<?php echo isset($_REQUEST['go']) ? '?go='.urlencode($_REQUEST['go']) : (isset($_REQUEST['closeafter']) ? '?closeafter' : ''); ?>">👤 J'ai déjà un compte</a>
 			</form>

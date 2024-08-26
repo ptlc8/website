@@ -53,4 +53,10 @@ function generate_token($length=32) {
 		$token .= $chars[rand(0, strlen($chars) - 1)];
 	return $token;
 }
+
+// déconnexion
+function logout() {
+	session_start();
+	unset($_SESSION['username'], $_SESSION['password']);
+}
 ?>
