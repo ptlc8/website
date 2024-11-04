@@ -23,7 +23,7 @@
 		<header>
 			<h1>Ambi.dev</h1>
 			<a href=".">Projets</a>
-			<a href="#">Serveur</a>
+			<a href="https://status.ambi.dev">Status</a>
 			<a href="account.php" class="account">
 				Mon compte
 				<img src="avatar.php" alt="avatar" width="64" height="64" />
