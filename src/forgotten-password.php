@@ -23,20 +23,29 @@ if (isset($_REQUEST['username'])) {
 			request_database("REPLACE INTO `FORGOTREQUEST` (`userId`, `token`, `expire`) VALUES ('", $user['id'], "', '", $token, "', CURDATE() + INTERVAL 7 DAY)");
 			$url = 'http://'.$website.'/reset-password.php?token='.$token;
 			$mail = <<<MAIL
-<div style="text-align: center;">
-	Salut $name,
-	<br /> J'ai appris que tu avais perdu ton mot de passe,
-	<br /> C'est pas cool
-	<br /> Heureuseument je suis là
-	<br /> J'ai donc concocté pour toi un petit lien :
-	<br /> <a href="$url">CLIQUE-MOI !</a>
-	<br /> Celui-ci te permettra de le changer
-	<br /> Mais attention, il n'est valable que 7 jours
-	<br /> (c'est beaucoup)
-	<br /> Sur ce, passe une bonne journée.
-</div>
+<html>
+	<body>
+		<div style="text-align: center;">
+			Salut $name,
+			<br /> J'ai appris que tu avais perdu ton mot de passe,
+			<br /> C'est pas cool
+			<br /> Heureuseument je suis là
+			<br /> J'ai donc concocté pour toi un petit lien :
+			<br /> <a href="$url">CLIQUE-MOI !</a>
+			<br /> Celui-ci te permettra de le changer
+			<br /> Mais attention, il n'est valable que 7 jours
+			<br /> (c'est beaucoup)
+			<br /> Sur ce, passe une bonne journée.
+		</div>
+	</body>
+</html>
 MAIL;
-			$mailed = mail($email, '<'.$website.'> Récupération de ton mot de passe', $mail, 'From:contact@'.$website.'\r\nMIME-Version: 1.0\r\nContent-type: text/html; charset=utf-8\r\n');
+			$mailed = mail($email, '['.$website.'] Récupération de ton mot de passe', $mail, array(
+				'From' => 'Ambi.dev <no-reply@'.$website.'>',
+				'Return-Path' => 'no-reply@'.$website,
+				'MIME-Version' => '1.0',
+				'Content-type' => 'text/html; charset=utf-8'
+			));
 		} else {
 			$error = 'Le nom d\'utilisateur est inconnu';
 		}
