@@ -7,9 +7,9 @@ $mailed = false;
 include('api/init.php');
 
 if (isset($_REQUEST['username'])) {
-	if (defined('HCAPTCHA_SECRET') && (!isset($_REQUEST['h-captcha-response']) || empty($_REQUEST['h-captcha-response']))) {
+	if (use_hcaptcha() && (!isset($_REQUEST['h-captcha-response']) || empty($_REQUEST['h-captcha-response']))) {
 		$error = 'Il faut que tu complètes le captcha juste au dessus 👾';
-	} else if (defined('HCAPTCHA_SECRET') && !json_decode(file_get_contents('https://hcaptcha.com/siteverify?secret='.HCAPTCHA_SECRET.'&response='.$_POST['h-captcha-response'].'&remoteip='.$_SERVER['REMOTE_ADDR']))->success) {
+	} else if (use_hcaptcha() && !verify_hcaptcha($_POST['h-captcha-response'])) {
 		$error = 'La vérification de ton humanité à échouer, réessaye 👽';
 	} else {
 		// envoi de l'e-mail
@@ -67,8 +67,8 @@ MAIL;
 				<form method="POST" action="" class="form">
 					<h1>Mot de passe oublié</h1>
 					<input name="username" type="text" placeholder="Nom d'utilisateur" required />
-					<?php if(defined('HCAPTCHA_SECRET')) { ?>
-					<div class="h-captcha" data-sitekey="bdea39ea-e2c6-49a8-aff4-800d01b0d6ac"></div>
+					<?php if(use_hcaptcha()) { ?>
+					<div class="h-captcha" data-sitekey="<?= get_hcaptcha_sitekey() ?>"></div>
 					<?php } ?>
 					<input type="submit" value="Changer de mot de passe" class="good" />
 					<?php if ($error !== null) { ?>

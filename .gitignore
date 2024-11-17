@@ -4,4 +4,6 @@ src/*
 !src/assets
 !src/*.*
 src/sitemap.json
+sitemap.json
 src/api/credentials.php
+.env

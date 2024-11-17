@@ -59,4 +59,21 @@ function logout() {
 	session_start();
 	unset($_SESSION['username'], $_SESSION['password']);
 }
+
+// vérifier si hCaptcha est activé
+function use_hcaptcha() {
+	return defined('HCAPTCHA_SECRET') && !empty(HCAPTCHA_SECRET) && defined('HCAPTCHA_SITEKEY') && !empty(HCAPTCHA_SITEKEY);
+}
+
+// obtenir la clé du site hCaptcha
+function get_hcaptcha_sitekey() {
+	return defined('HCAPTCHA_SITEKEY') ? HCAPTCHA_SITEKEY : null;
+}
+
+// vérifier la réponse hCaptcha
+function verify_hcaptcha($response) {
+	$hcaptcha_secret = defined('HCAPTCHA_SECRET') ? HCAPTCHA_SECRET : null;
+	$hcaptcha_response = file_get_contents('https://hcaptcha.com/siteverify?secret='.$hcaptcha_secret.'&response='.rawurlencode($response).'&remoteip='.$_SERVER['REMOTE_ADDR']);
+	return !json_decode($hcaptcha_response)->success;
+}
 ?>

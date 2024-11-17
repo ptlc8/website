@@ -1,0 +1,37 @@
+services:
+  web-server:
+    build: .
+    ports:
+      - 1212:80
+    volumes:
+      - ${SITEMAP_PATH:-./sitemap.json}:/var/www/html/sitemap.json:ro
+    environment:
+      DB_HOST: database
+      DB_USER: website
+      DB_PASS: secret
+      DB_NAME: website
+      HCAPTCHA_SECRET: ${HCAPTCHA_SECRET}
+      HCAPTCHA_SITEKEY: ${HCAPTCHA_SITEKEY}
+    depends_on:
+      - database
+    restart: always
+    labels:
+      - webproxy.path=
+      - webproxy.errors=404 /errors/404.html,403 /errors/403.html
+  database:
+    image: mariadb:${MARIADB_VERSION:-10.11}
+    expose:
+      - 3306
+    volumes:
+      - ./mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf:ro
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - database-data:/var/lib/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: super_secret
+      MARIADB_USER: website
+      MARIADB_PASSWORD: secret
+      MARIADB_DATABASE: website
+    restart: always
+volumes:
+  database-data:
+    driver: local

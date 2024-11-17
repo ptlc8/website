@@ -18,10 +18,10 @@ if (isset($_REQUEST['username'], $_REQUEST['email'], $_REQUEST['password'], $_RE
 	else if ($_REQUEST['password'] !== $_REQUEST['password2'])
 		$error = 'Ce ne sont pas les mêmes mots de passe 🥴';
 	// Teste si le captcha a bien été résolu
-	else if (defined('HCAPTCHA_SECRET') && (!isset($_REQUEST['h-captcha-response']) || empty($_REQUEST['h-captcha-response'])))
+	else if (use_hcaptcha() && (!isset($_REQUEST['h-captcha-response']) || empty($_REQUEST['h-captcha-response'])))
 		$error = 'Il faut que tu complètes le captcha juste au dessus 👾';
 	// Teste si le captcha a été résolu avec succès
-	else if (defined('HCAPTCHA_SECRET') && !json_decode(file_get_contents('https://hcaptcha.com/siteverify?secret='.HCAPTCHA_SECRET.'&response='.$_POST['h-captcha-response'].'&remoteip='.$_SERVER['REMOTE_ADDR']))->success)
+	else if (use_hcaptcha() && !verify_hcaptcha($_REQUEST['h-captcha-response']))
 		$error = 'La vérification de ton humanité à échouer, réessaye 👽';
 	// Inscription
 	else {
@@ -62,10 +62,10 @@ if (isset($_REQUEST['username'], $_REQUEST['email'], $_REQUEST['password'], $_RE
 				<label for="username">Prénom et nom</label>
 				<input type="text" name="firstname" placeholder="Prénom (invisible pour les autres)" <?php echo(isset($_REQUEST['firstname']) ? 'value="'.$_REQUEST['firstname'].'" ' : '') ?>required />
 				<input type="text" name="lastname" placeholder="Nom de famille (invisible pour les autres)" <?php echo(isset($_REQUEST['lastname']) ? 'value="'.$_REQUEST['lastname'].'" ' : '') ?>required />
-				<?php if(defined('HCAPTCHA_SECRET')) { ?>
+				<?php if(use_hcaptcha()) { ?>
 					<div>
 						<label>Vérification</label>
-						<div class="h-captcha" data-sitekey="bdea39ea-e2c6-49a8-aff4-800d01b0d6ac"></div>
+						<div class="h-captcha" data-sitekey="<?= get_hcaptcha_sitekey() ?>"></div>
 					</div>
 				<?php } ?>
 				<input type="submit" class="good" value="S'inscrire" />
