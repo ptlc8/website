@@ -5,7 +5,7 @@ $back = false;
 include('api/init.php');
 logout();
 
-if (!isset($_REQUEST['closeafter']))
+if (isset($_REQUEST['closeafter']))
     $close = true;
 else if (isset($_REQUEST['back']))
     $back = true;

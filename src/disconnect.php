@@ -4,7 +4,7 @@ $close = false;
 $back = false;
 
 include("api/init.php");
-if (!isset($_REQUEST['app'])) {
+if (isset($_REQUEST['app'])) {
 	$valid_request = true;
 	$app = request_database("SELECT * FROM APPS WHERE id = '", $_REQUEST['app'], "';")->fetch_assoc();
 	if ($app !== null) {

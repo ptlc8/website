@@ -31,10 +31,10 @@ if (isset($_REQUEST['username'], $_REQUEST['email'], $_REQUEST['password'], $_RE
 		$_SESSION['password'] = $hashed_password;
 		if (isset($_REQUEST['go']))
 			exit(header('Location: '.$_REQUEST['go']));
-		if (!isset($_REQUEST['closeafter'])) {
+		if (isset($_REQUEST['closeafter']))
+			$close = true;
+		else
 			exit(header('Location: .'));
-		}
-		$close = true;
 	}
 }
 ?>

@@ -7,9 +7,10 @@ if (isset($_REQUEST['username'], $_POST['password'])) {
 	if ($user !== null) {
 		if (isset($_REQUEST['go']))
 			exit(header('Location: '.$_REQUEST['go']));
-		if (!isset($_REQUEST['closeafter']))
+		if (isset($_REQUEST['closeafter']))
+			$close = true;
+		else
 			exit(header('Location: .'));
-		$close = true;
 	} else {
 		$fail = true;
 	}
