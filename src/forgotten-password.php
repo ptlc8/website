@@ -1,5 +1,4 @@
 <?php
-$website = $_SERVER['HTTP_HOST'];
 $admin_email_address = $_SERVER['SERVER_ADMIN'];
 $error = null;
 $success = false;
@@ -21,7 +20,7 @@ if (isset($_REQUEST['username'])) {
 			do $token = generate_token(32);
 			while (request_database("SELECT * FROM FORGOTREQUEST WHERE token = ', $token, '")->num_rows !== 0);
 			request_database("REPLACE INTO `FORGOTREQUEST` (`userId`, `token`, `expire`) VALUES ('", $user['id'], "', '", $token, "', CURDATE() + INTERVAL 7 DAY)");
-			$url = 'http://'.$website.'/reset-password.php?token='.$token;
+			$url = 'http://'.get_host().'/reset-password.php?token='.$token;
 			$mail = <<<MAIL
 <html>
 	<body>
@@ -40,9 +39,9 @@ if (isset($_REQUEST['username'])) {
 	</body>
 </html>
 MAIL;
-			$mailed = mail($email, '['.$website.'] Récupération de ton mot de passe', $mail, array(
-				'From' => 'Ambi.dev <no-reply@'.$website.'>',
-				'Return-Path' => 'no-reply@'.$website,
+			$mailed = mail($email, '['.get_site_name().'] Récupération de ton mot de passe', $mail, array(
+				'From' => get_site_name().' <no-reply@'.get_host().'>',
+				'Return-Path' => 'no-reply@'.get_host(),
 				'MIME-Version' => '1.0',
 				'Content-type' => 'text/html; charset=utf-8'
 			));
@@ -56,7 +55,7 @@ MAIL;
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>Mot de passe oublié | <?= $website ?></title>
+		<title>Mot de passe oublié | <?= get_site_name() ?></title>
 		<link rel="stylesheet" href="style.css" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<script src="https://www.hCaptcha.com/1/api.js" async defer></script>

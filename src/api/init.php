@@ -1,13 +1,49 @@
 <?php
-// initialisation globales + BDD
 include('credentials.php');
-$mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-if ($mysqli->connect_errno) {
-	echo 'Erreur de connexion côté serveur, veuillez réessayer plus tard';
-	exit;
+
+// obtenir une variable de configuration
+function get_config($name) {
+	return defined($name) && !empty(constant($name)) ? constant($name) : null;
 }
 
-// fonction de requête BDD
+// obtenir le nom de domaine
+function get_host() {
+	return $_SERVER['HTTP_HOST'];
+}
+
+// obtenir le protocole
+function get_protocol() {
+	return $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+}
+
+// obtenir le nom du site
+function get_site_name() {
+	return get_config('SITE_NAME') ?? get_host();
+}
+
+// obtenir les informations du site
+function get_site_data() {
+	$site_data = new stdClass();
+	$site_data->description = get_config('SITE_DESCRIPTION') ?? '';
+	$site_data->keywords = get_config('SITE_KEYWORDS') ?? '';
+	$site_data->author = get_config('SITE_AUTHOR') ?? '';
+	$site_data->copyright = '© '.date('Y').' '.$site_data->author.' - Tous droits réservés';
+	return $site_data;
+}
+
+// obtenir une connexion à la base de données
+function get_database() {
+	global $mysqli;
+	if (!isset($mysqli)) {
+		$mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+		if ($mysqli->connect_errno) {
+			exit('Erreur de connexion côté serveur, veuillez réessayer plus tard');
+		}
+	}
+	return $mysqli;
+}
+
+// faire une requête à la base de données
 function request_database(...$request_frags) {
 	$request = '';
 	$var = false;
@@ -15,10 +51,10 @@ function request_database(...$request_frags) {
 		$request .= ($var ? str_replace(array('\\', '\''), array('\\\\', '\\\''), $frag) : $frag);
 		$var = !$var;
 	}
-	global $mysqli;
+	$mysqli = get_database();
 	if (!$result = $mysqli->query($request)) {
 		echo 'Erreur de requête côté serveur, veuillez réessayer plus tard';
-		if ($_SERVER['SERVER_NAME'] == 'localhost')
+		if (str_ends_with(get_host(), 'localhost'))
 			echo " : $request";
 		exit;
 	}
@@ -62,17 +98,17 @@ function logout() {
 
 // vérifier si hCaptcha est activé
 function use_hcaptcha() {
-	return defined('HCAPTCHA_SECRET') && !empty(HCAPTCHA_SECRET) && defined('HCAPTCHA_SITEKEY') && !empty(HCAPTCHA_SITEKEY);
+	return get_config('HCAPTCHA_SECRET') && get_config('HCAPTCHA_SITEKEY');
 }
 
 // obtenir la clé du site hCaptcha
 function get_hcaptcha_sitekey() {
-	return defined('HCAPTCHA_SITEKEY') ? HCAPTCHA_SITEKEY : null;
+	return get_config('HCAPTCHA_SITEKEY');
 }
 
 // vérifier la réponse hCaptcha
 function verify_hcaptcha($response) {
-	$hcaptcha_secret = defined('HCAPTCHA_SECRET') ? HCAPTCHA_SECRET : null;
+	$hcaptcha_secret = get_config('HCAPTCHA_SECRET');
 	$hcaptcha_response = file_get_contents('https://hcaptcha.com/siteverify?secret='.$hcaptcha_secret.'&response='.rawurlencode($response).'&remoteip='.$_SERVER['REMOTE_ADDR']);
 	return !json_decode($hcaptcha_response)->success;
 }

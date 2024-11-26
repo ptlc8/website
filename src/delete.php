@@ -1,5 +1,4 @@
 <?php
-$website = $_SERVER['HTTP_HOST'];
 $deleted = false;
 include("api/init.php");
 $user = login_from_session();
@@ -14,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>Suppression | <?= $website ?></title>
+		<title>Suppression | <?= get_site_name() ?></title>
 		<link rel="stylesheet" href="style.css" />
 	    <meta name="viewport" content="width=device-width, initial-scale=1" />
 	</head>

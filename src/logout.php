@@ -1,5 +1,4 @@
 <?php
-$website = $_SERVER['HTTP_HOST'];
 $close = false;
 $back = false;
 
@@ -17,7 +16,7 @@ else
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>Déconnexion | <?= $website ?></title>
+		<title>Déconnexion | <?= get_site_name() ?></title>
 		<link rel="stylesheet" href="style.css" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 	</head>

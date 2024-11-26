@@ -1,9 +1,8 @@
 <?php
-$website = $_SERVER['HTTP_HOST'];
 $fail = false;
 $close = false;
+include("api/init.php");
 if (isset($_REQUEST['username'], $_POST['password'])) {
-	include("api/init.php");
 	$user = login($_REQUEST['username'], $_POST['password']);
 	if ($user !== null) {
 		if (isset($_REQUEST['go']))
@@ -20,7 +19,7 @@ if (isset($_REQUEST['username'], $_POST['password'])) {
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>Connexion | <?= $website ?></title>
+		<title>Connexion | <?= get_site_name() ?></title>
 		<link rel="stylesheet" href="style.css" />
 	    <meta name="viewport" content="width=device-width, initial-scale=1" />
 	</head>

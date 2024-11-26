@@ -19,6 +19,10 @@ RUN echo "<?php \
     define('DB_USER', getenv('DB_USER')); \
     define('DB_PASS', getenv('DB_PASS')); \
     define('DB_NAME', getenv('DB_NAME')); \
+    define('SITE_NAME', getenv('SITE_NAME')); \
+    define('SITE_DESCRIPTION', getenv('SITE_DESCRIPTION')); \
+    define('SITE_KEYWORDS', getenv('SITE_KEYWORDS')); \
+    define('SITE_AUTHOR', getenv('SITE_AUTHOR')); \
     define('HCAPTCHA_SECRET', getenv('HCAPTCHA_SECRET')); \
     define('HCAPTCHA_SITEKEY', getenv('HCAPTCHA_SITEKEY')); \
 ?>" > /var/www/html/api/credentials.php

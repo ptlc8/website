@@ -1,12 +1,11 @@
 <?php
-$website = $_SERVER['HTTP_HOST'];
 $valid_request = false;
 $close = false;
 $back = false;
 
+include("api/init.php");
 if (!isset($_REQUEST['app'])) {
 	$valid_request = true;
-	include("api/init.php");
 	$app = request_database("SELECT * FROM APPS WHERE id = '", $_REQUEST['app'], "';")->fetch_assoc();
 	if ($app !== null) {
 		$user = login_from_session();
@@ -30,7 +29,7 @@ if (!isset($_REQUEST['app'])) {
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>Déconnecter | <?= $website ?></title>
+		<title>Déconnecter | <?= get_site_name() ?></title>
 		<link rel="stylesheet" href="style.css" />
 	    <meta name="viewport" content="width=device-width, initial-scale=1" />
 	</head>

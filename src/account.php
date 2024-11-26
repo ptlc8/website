@@ -1,5 +1,4 @@
 <?php
-$website = $_SERVER['HTTP_HOST'];
 include("api/init.php");
 $user = login_from_session();
 if ($user == null) {
@@ -11,7 +10,7 @@ $tokens = request_database("SELECT * FROM `TOKENS` JOIN `APPS` ON app = id WHERE
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>Compte | <?= $website ?></title>
+		<title>Compte | <?= get_site_name() ?></title>
 		<link rel="stylesheet" href="style.css" />
 	    <meta name="viewport" content="width=device-width, initial-scale=1" />
 	</head>

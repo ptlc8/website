@@ -30,8 +30,13 @@ define('DB_HOST', 'my_host');
 define('DB_USER', 'my_user');
 define('DB_PASS', 'my_password');
 define('DB_NAME', 'my_dbname');
-define('HCAPTCHA_SECRET', '0x123456789aBcDeF'); // ligne optionnelle
-define('HCAPTCHA_SITEKEY', '0123abcd-45ef-6789-abcd-ef0123456789'); // ligne optionnelle
+// les lignes suivantes sont optionnelles
+define('SITE_NAME', 'Ambi.dev');
+define('SITE_DESCRIPTION', 'Site web regroupant mes différents projets.');
+define('SITE_KEYWORDS', 'ambi, dev, site, web, projets');
+define('SITE_AUTHOR', 'Ambi');
+define('HCAPTCHA_SECRET', '0x123456789aBcDeF');
+define('HCAPTCHA_SITEKEY', '0123abcd-45ef-6789-abcd-ef0123456789');
 ?>
 ```
  - créer un fichier src/sitemap.json en prenant exemple sur [sitemap.json.example](sitemap.json.example)

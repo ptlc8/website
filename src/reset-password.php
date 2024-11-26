@@ -1,5 +1,4 @@
 <?php
-$website = $_SERVER['HTTP_HOST'];
 $error = null;
 $success = false;
 
@@ -30,7 +29,7 @@ if ($request !== null && isset($_REQUEST['password'], $_REQUEST['password2'])) {
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>Réinitialisation de mot de passe | <?= $website ?></title>
+		<title>Réinitialisation de mot de passe | <?= get_site_name() ?></title>
 		<link rel="stylesheet" href="style.css" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 	</head>
