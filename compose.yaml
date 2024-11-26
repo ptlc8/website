@@ -1,23 +1,34 @@
 services:
   web-server:
-    build: .
+    build:
+      context: .
+      dockerfile: ./web-server.Dockerfile
     ports:
-      - 1212:80
+      - 80
     volumes:
-      - ${SITEMAP_PATH:-./sitemap.json}:/var/www/html/sitemap.json:ro
+      - ${SITEMAP_PATH:-./sitemap.json}:/usr/local/apache2/htdocs/sitemap.json:ro
+    depends_on:
+      - fast-cgi
+    restart: always
+    labels:
+      - webproxy.path=
+      - webproxy.errors=404:/errors/404.html,403:/errors/403.html
+  fast-cgi:
+    build:
+      context: .
+      dockerfile: ./fast-cgi.Dockerfile
+    expose:
+      - 9000
     environment:
       DB_HOST: database
       DB_USER: website
       DB_PASS: secret
       DB_NAME: website
-      HCAPTCHA_SECRET: ${HCAPTCHA_SECRET}
-      HCAPTCHA_SITEKEY: ${HCAPTCHA_SITEKEY}
+      HCAPTCHA_SECRET: ${HCAPTCHA_SECRET:-}
+      HCAPTCHA_SITEKEY: ${HCAPTCHA_SITEKEY:-}
     depends_on:
       - database
     restart: always
-    labels:
-      - webproxy.path=
-      - webproxy.errors=404 /errors/404.html,403 /errors/403.html
   database:
     image: mariadb:${MARIADB_VERSION:-10.11}
     expose:
