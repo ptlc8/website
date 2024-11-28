@@ -6,8 +6,7 @@ ARG PHP_ENV=production # can be "development"
 RUN mv "$PHP_INI_DIR/php.ini-"${PHP_ENV} "$PHP_INI_DIR/php.ini"
 
 # Install the mysqli extension
-RUN apk add --no-cache libxml2-dev && \
-    docker-php-ext-install mysqli
+RUN docker-php-ext-install mysqli
 
 # Copy the source files
 COPY src /var/www/html
