@@ -12,7 +12,6 @@ services:
     restart: always
     labels:
       - webproxy.path=
-      - webproxy.errors=404:/errors/404.html,403:/errors/403.html
   fast-cgi:
     build:
       context: .

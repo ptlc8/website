@@ -11,6 +11,10 @@ if (isset($_REQUEST['id'])) {
 if ($user == null) {
     exit(header("Location: assets/unset.png"));
 }
-exit(header("Location: https://www.gravatar.com/avatar/".md5(strtolower(trim($user['email'])))."?s=200&d=robohash&r=pg"));
+
+$default = $_REQUEST['d'] ?? 'robohash';
+
+# See https://docs.gravatar.com/api/avatars/images/ for more information
+exit(header("Location: https://www.gravatar.com/avatar/".md5(strtolower(trim($user['email'])))."?s=200&d=".$default."&r=pg"));
 
 ?>
