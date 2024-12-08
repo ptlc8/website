@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="index.css" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="shortcut icon" href="favicon.ico" />
-		<meta name="language" content="fr-FR" />
+		<meta name="language" content="fr" />
 		<meta name="sitename" content="<?= get_site_name() ?>" />
 		<meta name="keywords" content="<?= get_site_data()->keywords ?>" />
 		<meta name="description" content="<?= get_site_data()->description ?>" />
@@ -17,6 +17,11 @@
 		<meta name="copyright" content="<?= get_site_data()->copyright ?>" />
 		<meta name="author" content="<?= get_site_data()->author ?>" />
 		<link rel="canonical" href="https://<?= get_host() ?>" />
+		<meta property="og:url" content="https://<?= get_host() ?>" />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="<?= get_site_name() ?>" />
+		<meta property="og:description" content="<?= get_site_data()->description ?>" />
+		<meta property="og:image" content="https://<?= get_host() ?>/favicon.ico" />
 	</head>
 	<body>
 		<?php if (date('n') == 4 && date('j') == 1) { ?>
