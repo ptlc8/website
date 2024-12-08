@@ -31,6 +31,11 @@ function get_site_data() {
 	return $site_data;
 }
 
+// obtenir la liste des projets
+function get_sitemap() {
+	return json_decode(file_get_contents('sitemap.json'));
+}
+
 // obtenir une connexion à la base de données
 function get_database() {
 	global $mysqli;

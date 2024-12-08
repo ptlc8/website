@@ -5,8 +5,6 @@ services:
       dockerfile: ./web-server.Dockerfile
     ports:
       - 80
-    volumes:
-      - ${SITEMAP_PATH:-./sitemap.json}:/usr/local/apache2/htdocs/sitemap.json:ro
     depends_on:
       - fast-cgi
     restart: always
@@ -18,6 +16,8 @@ services:
       dockerfile: ./fast-cgi.Dockerfile
     expose:
       - 9000
+    volumes:
+      - ${SITEMAP_PATH:-./sitemap.json}:/var/www/html/sitemap.json:ro
     environment:
       DB_HOST: database
       DB_USER: website
