@@ -1,9 +1,12 @@
 <?php
-include('credentials.php');
+// si le fichier credentials.php existe, on l'inclut
+@include('credentials.php');
 
 // obtenir une variable de configuration
 function get_config($name) {
-	return defined($name) && !empty(constant($name)) ? constant($name) : null;
+	if (defined($name) && !empty(constant($name)))
+		return constant($name);
+	return getenv($name) ?? null;
 }
 
 // obtenir le nom de domaine
@@ -40,7 +43,7 @@ function get_sitemap() {
 function get_database() {
 	global $mysqli;
 	if (!isset($mysqli)) {
-		$mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+		$mysqli = new mysqli(get_config('DB_HOST'), get_config('DB_USER'), get_config('DB_PASS'), get_config('DB_NAME'));
 		if ($mysqli->connect_errno) {
 			exit('Erreur de connexion côté serveur, veuillez réessayer plus tard');
 		}
@@ -115,6 +118,6 @@ function get_hcaptcha_sitekey() {
 function verify_hcaptcha($response) {
 	$hcaptcha_secret = get_config('HCAPTCHA_SECRET');
 	$hcaptcha_response = file_get_contents('https://hcaptcha.com/siteverify?secret='.$hcaptcha_secret.'&response='.rawurlencode($response).'&remoteip='.$_SERVER['REMOTE_ADDR']);
-	return !json_decode($hcaptcha_response)->success;
+	return json_decode($hcaptcha_response)->success;
 }
 ?>

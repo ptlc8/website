@@ -13,7 +13,7 @@ Actuellement déployé sur [ambi.dev](https://ambi.dev).
 
  - cloner le projet avec git
  - créer un fichier sitemap.json à la racine du projet en prenant exemple sur [sitemap.json.example](sitemap.json.example) ou à un autre emplacement en spécifiant le chemin dans la variable d'environnement `SITEMAP_PATH`
- - optionnel : mettre les variables d'environnement `HCAPTCHA_SECRET` et `HCAPTCHA_SITEKEY` dans un fichier `.env` à la racine du projet
+ - optionnel : mettre les variables d'environnement `HCAPTCHA_SECRET`, `HCAPTCHA_SITEKEY` et `MAIL_SOCKET` dans un fichier `.env` à la racine du projet
  - lancer les conteneurs docker avec `docker compose up -d`
 
 
@@ -41,6 +41,7 @@ define('HCAPTCHA_SITEKEY', '0123abcd-45ef-6789-abcd-ef0123456789');
 ```
  - créer un fichier src/sitemap.json en prenant exemple sur [sitemap.json.example](sitemap.json.example)
  - exécuter dans la base de données le script SQL [init.sql](init.sql)
+ - optionnel mais nécessaire pour envoyer les mails de récupération, installer un serveur SMTP local (port 25)
  - lancer le serveur php
 
 

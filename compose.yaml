@@ -18,6 +18,7 @@ services:
       - 9000
     volumes:
       - ${SITEMAP_PATH:-./sitemap.json}:/var/www/html/sitemap.json:ro
+      - ${MAIL_SOCKET:-/run/mail.sock}:/run/mail.sock:rw
     environment:
       DB_HOST: database
       DB_USER: website
