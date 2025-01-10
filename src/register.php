@@ -52,15 +52,15 @@ if (isset($_REQUEST['username'], $_REQUEST['email'], $_REQUEST['password'], $_RE
 			<form method="POST" action="" class="form">
 				<h1>Inscription</h1>
 				<label for="username">Nom d'utilisateur</label>
-				<input id="username" type="text" name="username" placeholder="Nom d'utilisateur (visible par tous)" <?php echo(isset($_REQUEST['username']) ? 'value="'.$_REQUEST['username'].'" ' : '') ?>required />
+				<input id="username" type="text" name="username" placeholder="Nom d'utilisateur (visible par tous)" <?= isset($_REQUEST['username']) ? 'value="'.$_REQUEST['username'].'"' : 'autofocus' ?> required />
 				<label for="username">Adresse e-mail</label>
-				<input type="email" name="email" placeholder="Adresse e-mail (invisible pour les autres)" <?php echo(isset($_REQUEST['email']) ? 'value="'.$_REQUEST['email'].'" ' : '') ?>required />
+				<input type="email" name="email" placeholder="Adresse e-mail (invisible pour les autres)" <?= isset($_REQUEST['email']) ? 'value="'.$_REQUEST['email'].'" ' : '' ?>required />
 				<label for="username">Mot de passe</label>
 				<input type="password" name="password" placeholder="Mot de passe" required />
 				<input type="password" name="password2" placeholder="Confirmation de mot de passe" required />
 				<label for="username">Prénom et nom</label>
-				<input type="text" name="firstname" placeholder="Prénom (invisible pour les autres)" <?php echo(isset($_REQUEST['firstname']) ? 'value="'.$_REQUEST['firstname'].'" ' : '') ?>required />
-				<input type="text" name="lastname" placeholder="Nom de famille (invisible pour les autres)" <?php echo(isset($_REQUEST['lastname']) ? 'value="'.$_REQUEST['lastname'].'" ' : '') ?>required />
+				<input type="text" name="firstname" placeholder="Prénom (invisible pour les autres)" <?= isset($_REQUEST['firstname']) ? 'value="'.$_REQUEST['firstname'].'" ' : '' ?>required />
+				<input type="text" name="lastname" placeholder="Nom de famille (invisible pour les autres)" <?= isset($_REQUEST['lastname']) ? 'value="'.$_REQUEST['lastname'].'" ' : '' ?>required />
 				<?php if(use_hcaptcha()) { ?>
 					<div>
 						<label>Vérification</label>
@@ -74,7 +74,7 @@ if (isset($_REQUEST['username'], $_REQUEST['email'], $_REQUEST['password'], $_RE
 					<script>window.close();</script>
 					<p class="helper">Tu es maintenant inscrit(e), tu peux fermer cet onglet. 🎉</p>
 				<?php } ?>
-				<a class="large" href="login.php<?php echo isset($_REQUEST['go']) ? '?go='.urlencode($_REQUEST['go']) : (isset($_REQUEST['closeafter']) ? '?closeafter' : ''); ?>">👤 J'ai déjà un compte</a>
+				<a class="large" href="login.php<?= isset($_REQUEST['go']) ? '?go='.urlencode($_REQUEST['go']) : (isset($_REQUEST['closeafter']) ? '?closeafter' : ''); ?>">👤 J'ai déjà un compte</a>
 			</form>
 		</section>
 	</body>

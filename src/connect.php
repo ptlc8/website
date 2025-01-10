@@ -61,7 +61,7 @@ if (isset($_REQUEST['app'])) {
 						<li>ton nom d'utilisateur et ton id</li>
 						<!--<li>ton adresse e-mail</li>-->
 					</ul>
-					<input type="submit" value="Connecter" class="good" />
+					<input type="submit" value="Connecter" class="good" autofocus />
 				</form>
 			<?php } ?>
 			<a href="account.php">👤 Mon compte</a>

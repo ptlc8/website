@@ -65,7 +65,7 @@ MAIL;
 			<?php if (!$success) { ?>
 				<form method="POST" action="" class="form">
 					<h1>Mot de passe oublié</h1>
-					<input name="username" type="text" placeholder="Nom d'utilisateur" required />
+					<input name="username" type="text" placeholder="Nom d'utilisateur" required autofocus />
 					<?php if(use_hcaptcha()) { ?>
 					<div class="h-captcha" data-sitekey="<?= get_hcaptcha_sitekey() ?>"></div>
 					<?php } ?>
