@@ -16,12 +16,12 @@
 		<meta name="robots" content="index, follow" />
 		<meta name="copyright" content="<?= get_site_data()->copyright ?>" />
 		<meta name="author" content="<?= get_site_data()->author ?>" />
-		<link rel="canonical" href="https://<?= get_host() ?>" />
-		<meta property="og:url" content="https://<?= get_host() ?>" />
+		<link rel="canonical" href="<?= get_protocol() ?>://<?= get_host() ?>" />
+		<meta property="og:url" content="<?= get_protocol() ?>://<?= get_host() ?>" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="<?= get_site_name() ?>" />
 		<meta property="og:description" content="<?= get_site_data()->description ?>" />
-		<meta property="og:image" content="https://<?= get_host() ?>/favicon.ico" />
+		<meta property="og:image" content="<?= get_protocol() ?>://<?= get_host() ?>/favicon.ico" />
 	</head>
 	<body>
 		<?php if (date('n') == 4 && date('j') == 1) { ?>

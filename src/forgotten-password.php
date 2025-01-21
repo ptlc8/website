@@ -20,7 +20,7 @@ if (isset($_REQUEST['username'])) {
 			do $token = generate_token(32);
 			while (request_database("SELECT * FROM FORGOTREQUEST WHERE token = ', $token, '")->num_rows !== 0);
 			request_database("REPLACE INTO `FORGOTREQUEST` (`userId`, `token`, `expire`) VALUES ('", $user['id'], "', '", $token, "', CURDATE() + INTERVAL 7 DAY)");
-			$url = 'http://'.get_host().'/reset-password.php?token='.$token;
+			$url = get_protocol().'://'.get_host().'/reset-password.php?token='.$token;
 			$mail = <<<MAIL
 <html>
 	<body>

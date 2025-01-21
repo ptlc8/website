@@ -16,7 +16,11 @@ function get_host() {
 
 // obtenir le protocole
 function get_protocol() {
-	return $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+	if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+		return 'https';
+	if (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
+		return 'https';
+	return 'http';
 }
 
 // obtenir le nom du site
