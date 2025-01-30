@@ -40,7 +40,7 @@ define('HCAPTCHA_SITEKEY', '0123abcd-45ef-6789-abcd-ef0123456789');
 ?>
 ```
  - créer un fichier src/sitemap.json en prenant exemple sur [sitemap.json.example](sitemap.json.example)
- - exécuter dans la base de données le script SQL [init.sql](init.sql)
+ - exécuter dans la base de données le script SQL [database/init.sql](database/init.sql)
  - optionnel mais nécessaire pour envoyer les mails de récupération, installer un serveur SMTP local (port 25)
  - lancer le serveur php
 
