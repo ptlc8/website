@@ -3,24 +3,24 @@
 <html lang="fr">
 	<head>
 		<meta charset="UTF-8" />
-		<title><?= get_site_name() ?> - Partage de projets</title>
+		<title><?= htmlspecialchars(get_site_name()) ?> - Projets</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="style.css" />
 		<link rel="stylesheet" href="index.css" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="shortcut icon" href="favicon.ico" />
 		<meta name="language" content="fr" />
-		<meta name="sitename" content="<?= get_site_name() ?>" />
-		<meta name="keywords" content="<?= get_site_data()->keywords ?>" />
-		<meta name="description" content="<?= get_site_data()->description ?>" />
+		<meta name="sitename" content="<?= htmlspecialchars(get_site_name()) ?>" />
+		<meta name="keywords" content="<?= htmlspecialchars(get_site_data()->keywords) ?>" />
+		<meta name="description" content="<?= htmlspecialchars(get_site_data()->description) ?>" />
 		<meta name="robots" content="index, follow" />
-		<meta name="copyright" content="<?= get_site_data()->copyright ?>" />
-		<meta name="author" content="<?= get_site_data()->author ?>" />
+		<meta name="copyright" content="<?= htmlspecialchars(get_site_data()->copyright) ?>" />
+		<meta name="author" content="<?= htmlspecialchars(get_site_data()->author) ?>" />
 		<link rel="canonical" href="<?= get_protocol() ?>://<?= get_host() ?>" />
 		<meta property="og:url" content="<?= get_protocol() ?>://<?= get_host() ?>" />
 		<meta property="og:type" content="website" />
-		<meta property="og:title" content="<?= get_site_name() ?>" />
-		<meta property="og:description" content="<?= get_site_data()->description ?>" />
+		<meta property="og:title" content="<?= htmlspecialchars(get_site_name()) ?>" />
+		<meta property="og:description" content="<?= htmlspecialchars(get_site_data()->description) ?>" />
 		<meta property="og:image" content="<?= get_protocol() ?>://<?= get_host() ?>/favicon.ico" />
 	</head>
 	<body>
@@ -29,7 +29,7 @@
 		<?php } ?>
 
 		<header>
-			<h1><?= get_site_name() ?></h1>
+			<h1><?= htmlspecialchars(get_site_name()) ?></h1>
 			<a href="." title="Page de projets">Projets</a>
 			<a href="<?= get_protocol() ?>://status.<?= get_host() ?>" title="Page d'état">Statuts</a>
 			<a href="account.php" title="Page de compte" class="account">
@@ -47,7 +47,7 @@
 				<div class="card" id="<?= $id ?>" style="background-color: <?= $subsite->color ?>;">
 					<img class="preview" alt="" src="<?= $subsite->preview ?? '' ?>" />
 					<div class="head">
-						<img src="<?= $subsite->img ?>" width="128" alt="<?= $subsite->title ?>" />
+						<img src="<?= $subsite->img ?>" width="128" alt="<?= htmlspecialchars($subsite->title) ?>" />
 						<h2 class="title"><?= $subsite->title ?></h2>
 						<?php if ($subsite->git) { ?>
 							<a class="git" href="<?= $subsite->git ?>" title="Dépôt git">
@@ -57,7 +57,7 @@
 					</div>
 					<div class="detail">
 						<?php foreach ($subsite->content as $button) { ?>
-							<a href="<?= $button->link ?? '#' ?>" title="<?= $button->title ?>">
+							<a href="<?= $button->link ?? '#' ?>" title="<?= htmlspecialchars($button->title) ?>">
 								<?= $button->title ?>
 							</a>
 						<?php } ?>
@@ -67,7 +67,7 @@
 		</div>
 
 		<footer>
-			<?= get_site_data()->copyright ?>
+			<?= htmlspecialchars(get_site_data()->copyright) ?>
 		</footer>
 	</body>
 </html>

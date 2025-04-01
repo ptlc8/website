@@ -14,16 +14,16 @@ else
 ?>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8" />
-		<title>Déconnexion | <?= get_site_name() ?></title>
-		<link rel="stylesheet" href="style.css" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-	</head>
-	<body>
-		<section class="container">
-            <h1>Déconnexion réussie</h1>
-            <p>Tu as bien été déconnecté de ton compte. 😶‍🌫️</p>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Désauthentification | <?= htmlspecialchars(get_site_name()) ?></title>
+        <link rel="stylesheet" href="style.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+    <body>
+        <section class="container">
+            <h1>Désauthentification réussie</h1>
+            <p>Tu as bien été désauthentifié de ton compte. 😶‍🌫️</p>
             <?php if ($close) { ?>
                 <script>window.close();</script>
                 <p>Tu peux fermer cet onglet.</p>

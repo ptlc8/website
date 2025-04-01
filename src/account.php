@@ -8,13 +8,13 @@ $tokens = request_database("SELECT * FROM `TOKENS` JOIN `APPS` ON app = id WHERE
 ?>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8" />
-		<title>Compte | <?= get_site_name() ?></title>
-		<link rel="stylesheet" href="style.css" />
-	    <meta name="viewport" content="width=device-width, initial-scale=1" />
-	</head>
-	<body>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Compte | <?= htmlspecialchars(get_site_name()) ?></title>
+        <link rel="stylesheet" href="style.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+    <body>
         <section class="floating container">
             <h1>Ton compte</h1>
             <div>

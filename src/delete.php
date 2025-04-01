@@ -13,9 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>Suppression | <?= get_site_name() ?></title>
+		<title>Suppression | <?= htmlspecialchars(get_site_name()) ?></title>
 		<link rel="stylesheet" href="style.css" />
-	    <meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 	</head>
 	<body>
 		<section class="floating container">

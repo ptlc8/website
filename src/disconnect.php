@@ -29,9 +29,9 @@ if (isset($_REQUEST['app'])) {
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>Déconnecter | <?= get_site_name() ?></title>
+		<title>Déconnexion | <?= htmlspecialchars(get_site_name()) ?></title>
 		<link rel="stylesheet" href="style.css" />
-	    <meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 	</head>
 	<body>
 		<?php if (isset($app)) { ?>

@@ -20,27 +20,27 @@ if (isset($_REQUEST['username'], $_POST['password'])) {
 <html>
 	<head>
 		<meta charset="UTF-8" />
-		<title>Connexion | <?= get_site_name() ?></title>
+		<title>Authentification | <?= htmlspecialchars(get_site_name()) ?></title>
 		<link rel="stylesheet" href="style.css" />
-	    <meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 	</head>
 	<body>
 		<section class="floating container">
 			<form method="post" action="">
-				<h1>Connexion</h1>
+				<h1>Authentification</h1>
 				<label for="username">Nom d'utilisateur</label>
 				<input id="username" name="username" type="text" placeholder="Nom d'utilisateur" <?= isset($_REQUEST['username']) ? 'value="'.$_REQUEST['username'].'"' : 'autofocus' ?> autocomplete="name" />
 				<label for="password">Mot de passe</label>
 				<input id="password" name="password" type="password" placeholder="Mot de passe" autocomplete="current-password" <?= isset($_REQUEST['username']) ? 'autofocus ' : '' ?>/>
-				<input type="submit" value="Se connecter" class="good" />
+				<input type="submit" value="S'authentifier" class="good" />
 				<?php
 				if ($fail) { ?>
 					<p class="error">Nom d'utilisateur ou mot de passe invalide. 😱</p>
 				<?php } else if ($close) { ?>
-					<p class="helper">Vous êtes connecté(e), vous pouvez fermer cet onglet. 🎉</p>
+					<p class="helper">Vous êtes authentifié(e), vous pouvez fermer cet onglet. 🎉</p>
 					<script>window.close();</script>
 				<?php } ?>
-				<a class="large" href="register.php<?= isset($_REQUEST['go']) ? '?go='.urlencode($_REQUEST['go']) : (isset($_REQUEST['closeafter']) ? '?closeafter' : '?'); ?>">🎉 Je me connecte pour la première fois</a>
+				<a class="large" href="register.php<?= isset($_REQUEST['go']) ? '?go='.urlencode($_REQUEST['go']) : (isset($_REQUEST['closeafter']) ? '?closeafter' : '?'); ?>">🎉 Je m'authentifie pour la première fois</a>
 				<a class="large" href="forgotten-password.php">😓 J'ai oublié mon mot de passe</a>
 			</form>
 		</section>
