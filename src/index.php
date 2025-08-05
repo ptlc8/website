@@ -6,7 +6,6 @@
 		<title><?= htmlspecialchars(get_site_name()) ?> - Projets</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="style.css" />
-		<link rel="stylesheet" href="index.css" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="shortcut icon" href="favicon.ico" />
 		<meta name="language" content="fr" />
@@ -44,23 +43,28 @@
 			foreach ($sitemap as $subsite) {
 				$id = strtolower(preg_replace('/[^a-z0-9]+/i', '-', $subsite->title));
 			?>
-				<div class="card" id="<?= $id ?>" style="background-color: <?= $subsite->color ?>;">
-					<img class="preview" alt="" src="<?= $subsite->preview ?? '' ?>" />
+				<div class="card" id="<?= $id ?>" style="background-color: <?= $subsite->color ?>;" onclick="location.href = '#<?= $id ?>'">
+					<img class="preview" alt="" src="<?= htmlspecialchars($subsite->preview) ?? '' ?>" />
 					<div class="head">
-						<img src="<?= $subsite->img ?>" width="128" alt="<?= htmlspecialchars($subsite->title) ?>" />
-						<h2 class="title"><?= $subsite->title ?></h2>
+						<img src="<?= htmlspecialchars($subsite->img) ?>" width="128" alt="<?= htmlspecialchars($subsite->title) ?>" />
+						<h2 class="title"><?= htmlspecialchars($subsite->title) ?></h2>
 						<?php if ($subsite->git) { ?>
-							<a class="git" href="<?= $subsite->git ?>" title="Dépôt git">
+							<a class="git" href="<?= htmlspecialchars($subsite->git) ?>" target="_blank" title="Dépôt git">
 								<img src="assets/git.png" height="32" alt="git" />
 							</a>
 						<?php } ?>
 					</div>
-					<div class="detail">
-						<?php foreach ($subsite->content as $button) { ?>
-							<a href="<?= $button->link ?? '#' ?>" title="<?= htmlspecialchars($button->title) ?>">
-								<?= $button->title ?>
-							</a>
+					<div class="body">
+						<?php if ($subsite->description) { ?>
+							<p><?= htmlspecialchars($subsite->description) ?></p>
 						<?php } ?>
+						<div class="buttons">
+							<?php foreach ($subsite->content as $button) { ?>
+								<a href="<?= $button->link ?? '#' ?>" title="<?= htmlspecialchars($button->title) ?>">
+									<?= htmlspecialchars($button->title) ?>
+								</a>
+							<?php } ?>
+						</div>
 					</div>
 				</div>
 			<?php } ?>

@@ -14,6 +14,7 @@
 
 html {
     height: 100%;
+    scroll-behavior: smooth;
 }
 body {
     font-family: Elected Office, Helvetica, Arial, sans-serif;
@@ -61,16 +62,21 @@ body {
 /* header */
 
 header {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
-	gap: 1em;
-	margin: 0 .5em 1em .5em;
-	padding: .5em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+    margin: 0 .5em 1em .5em;
+    padding: .5em;
 }
 header h1 {
     flex: 1 0;
+    margin: .5em 0;
+}
+header h1:first-letter {
+    font-size: 1.25em;
+    color: #82b;
 }
 header a {
     border-radius: 3em;
@@ -82,10 +88,10 @@ header a img {
     border-radius: 1.5em;
 }
 @media screen and (max-width: 600px) {
-	header {
-		display: grid;
-	    grid-template-columns: 1fr 1fr;
-	}
+    header {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
     header .account {
         grid-row: 1;
         grid-column: 2;
@@ -103,20 +109,20 @@ footer {
     padding: .5em;
 }
 
+
 /* projects deck */
 
 .deck {
-	display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-	gap: 1em;
+    columns: 20em auto;
+    gap: 2em;
+}
+.deck > * {
+    margin-bottom: 2em;
 }
 .card {
-    margin: 0.5em;
     border-radius: 1em;
-    flex: 1 1 20em;
-	overflow: hidden;
-	transition: transform 0.1s, box-shadow 0.1s;
+    overflow: hidden;
+    transition: transform .2s, box-shadow .2s;
 }
 .card:hover {
     transform: scale(1.02);
@@ -143,15 +149,20 @@ footer {
 .card .head .title {
     flex: 1;
 }
-.card .head .git  img {
+.card .git img {
     height: 1.5em;
 }
-.card .detail {
+.card .body {
     margin: 0 1em 1em 1em;
-    white-space: nowrap;
-    overflow: auto;
 }
-.card a {
+.card .body p {
+    margin-top: 0;
+    text-align: center;
+}
+.card .buttons {
+    text-align: center;
+}
+.card .buttons a, .card .git {
     background-color: rgba(0, 0, 0, 0.25);
     margin: .2em;
 }
@@ -231,11 +242,11 @@ a, input[type=submit] {
     border-radius: 0.5em;
     color: white;
     text-decoration: none;
-    display: inline-block;
     text-align: center;
     background-color: #82b;
 }
 a {
+    display: inline-block;
     margin: 1em .5em 0;
 }
 a.large, input[type=submit] {
@@ -249,6 +260,13 @@ input[type=submit].good, a.good {
 }
 a > * {
     vertical-align: middle;
+}
+
+a, input {
+    transition: transform .2s ease;
+}
+a:hover, input[type=submit]:hover, a:focus, input:focus {
+    transform: scale(1.05);
 }
 
 ul {
@@ -304,7 +322,7 @@ ul {
 #april-fool {
 	position: fixed;
 	top: 0;
-    left: 0;
+	left: 0;
 	width: 100%;
 	height: 100%;
 	z-index: 1000000;
