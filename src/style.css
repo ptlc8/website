@@ -78,11 +78,11 @@ header h1:first-letter {
     font-size: 1.25em;
     color: #82b;
 }
-header a {
+header .button {
     border-radius: 3em;
     margin: 0;
 }
-header a img {
+header .button img {
     width: 3em;
     height: 3em;
     border-radius: 1.5em;
@@ -162,7 +162,7 @@ footer {
 .card .buttons {
     text-align: center;
 }
-.card .buttons a, .card .git {
+.card .button {
     background-color: rgba(0, 0, 0, 0.25);
     margin: .2em;
 }
@@ -237,7 +237,7 @@ input {
     font: inherit;
 }
 
-a, input[type=submit] {
+.button, input[type=submit] {
     padding: .5em 1em;
     border-radius: 0.5em;
     color: white;
@@ -245,27 +245,27 @@ a, input[type=submit] {
     text-align: center;
     background-color: #82b;
 }
-a {
+.button {
     display: inline-block;
     margin: 1em .5em 0;
 }
-a.large, input[type=submit] {
+.button.large, input[type=submit] {
     display: block;
 }
-input[type=submit].bad, a.bad {
+input[type=submit].bad, .button.bad {
     background-color: indianred;
 }
-input[type=submit].good, a.good {
+input[type=submit].good, .button.good {
     background-color: mediumseagreen;
 }
-a > * {
+.button > * {
     vertical-align: middle;
 }
 
-a, input {
+.button, input {
     transition: transform .2s ease;
 }
-a:hover, input[type=submit]:hover, a:focus, input:focus {
+.button:hover, input[type=submit]:hover, .button:focus, input:focus {
     transform: scale(1.05);
 }
 

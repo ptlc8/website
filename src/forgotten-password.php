@@ -63,7 +63,7 @@ MAIL;
 	<body>
 		<section class="floating container">
 			<?php if (!$success) { ?>
-				<form method="POST" action="" class="form">
+				<form method="POST" action="">
 					<h1>Mot de passe oublié</h1>
 					<input name="username" type="text" placeholder="Nom d'utilisateur" required autofocus />
 					<?php if(use_hcaptcha()) { ?>

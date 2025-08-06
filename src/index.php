@@ -29,9 +29,9 @@
 
 		<header>
 			<h1><?= htmlspecialchars(get_site_name()) ?></h1>
-			<a href="." title="Page de projets">Projets</a>
-			<a href="<?= get_protocol() ?>://status.<?= get_host() ?>" title="Page d'état">Statuts</a>
-			<a href="account.php" title="Page de compte" class="account">
+			<a class="button" href="." title="Page de projets">Projets</a>
+			<a class="button" href="<?= get_protocol() ?>://status.<?= get_host() ?>" title="Page d'état">Statuts</a>
+			<a class="button" href="account.php" title="Page de compte" class="account">
 				Mon compte
 				<img src="avatar.php" alt="avatar" width="64" height="64" />
 			</a>
@@ -49,7 +49,7 @@
 						<img src="<?= htmlspecialchars($subsite->img) ?>" width="128" alt="<?= htmlspecialchars($subsite->title) ?>" />
 						<h2 class="title"><?= htmlspecialchars($subsite->title) ?></h2>
 						<?php if ($subsite->git) { ?>
-							<a class="git" href="<?= htmlspecialchars($subsite->git) ?>" target="_blank" title="Dépôt git">
+							<a class="button git" href="<?= htmlspecialchars($subsite->git) ?>" target="_blank" title="Dépôt git">
 								<img src="assets/git.png" height="32" alt="git" />
 							</a>
 						<?php } ?>
@@ -60,7 +60,7 @@
 						<?php } ?>
 						<div class="buttons">
 							<?php foreach ($subsite->content as $button) { ?>
-								<a href="<?= $button->link ?? '#' ?>" title="<?= htmlspecialchars($button->title) ?>">
+								<a class="button" href="<?= $button->link ?? '#' ?>" title="<?= htmlspecialchars($button->title) ?>">
 									<?= htmlspecialchars($button->title) ?>
 								</a>
 							<?php } ?>

@@ -29,7 +29,7 @@ if (isset($_REQUEST['username'], $_POST['password'])) {
 			<form method="post" action="">
 				<h1>Authentification</h1>
 				<label for="username">Nom d'utilisateur</label>
-				<input id="username" name="username" type="text" placeholder="Nom d'utilisateur" <?= isset($_REQUEST['username']) ? 'value="'.$_REQUEST['username'].'"' : 'autofocus' ?> autocomplete="name" />
+				<input id="username" name="username" type="text" placeholder="Nom d'utilisateur" <?= isset($_REQUEST['username']) ? 'value="'.htmlspecialchars($_REQUEST['username']).'"' : 'autofocus' ?> autocomplete="name" />
 				<label for="password">Mot de passe</label>
 				<input id="password" name="password" type="password" placeholder="Mot de passe" autocomplete="current-password" <?= isset($_REQUEST['username']) ? 'autofocus ' : '' ?>/>
 				<input type="submit" value="S'authentifier" class="good" />
@@ -37,11 +37,11 @@ if (isset($_REQUEST['username'], $_POST['password'])) {
 				if ($fail) { ?>
 					<p class="error">Nom d'utilisateur ou mot de passe invalide. 😱</p>
 				<?php } else if ($close) { ?>
-					<p class="helper">Vous êtes authentifié(e), vous pouvez fermer cet onglet. 🎉</p>
+					<p class="helper">Tu es authentifié(e), tu peux fermer cette page. 🎉</p>
 					<script>window.close();</script>
 				<?php } ?>
-				<a class="large" href="register.php<?= isset($_REQUEST['go']) ? '?go='.urlencode($_REQUEST['go']) : (isset($_REQUEST['closeafter']) ? '?closeafter' : '?'); ?>">🎉 Je m'authentifie pour la première fois</a>
-				<a class="large" href="forgotten-password.php">😓 J'ai oublié mon mot de passe</a>
+				<a class="button large" href="register.php<?= isset($_REQUEST['go']) ? '?go='.urlencode($_REQUEST['go']) : (isset($_REQUEST['closeafter']) ? '?closeafter' : '?') ?>">🎉 Je m'authentifie pour la première fois</a>
+				<a class="button large" href="forgotten-password.php">😓 J'ai oublié mon mot de passe</a>
 			</form>
 		</section>
 	</body>

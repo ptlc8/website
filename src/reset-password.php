@@ -38,7 +38,7 @@ if ($request !== null && isset($_REQUEST['password'], $_REQUEST['password2'])) {
 			<?php if ($request === null) { ?>
 				<h1>Cette requête n'existe pas ou a expirée 🤕</h1>
 			<?php } else if (!$success) { ?>
-				<form method="POST" action="?token=<?= $_REQUEST['token']; ?>" class="form">
+				<form method="POST" action="?token=<?= htmlspecialchars($_REQUEST['token']) ?>">
 					<h1>Réinitialisation de mot de passe</h1>
 					<input name="password" type="password" placeholder="Nouveau mot de passe" required autofocus />
 					<input name="password2" type="password" placeholder="Confirmation du mot de passe" required />
@@ -49,7 +49,7 @@ if ($request !== null && isset($_REQUEST['password'], $_REQUEST['password2'])) {
 				</form>
 			<?php } else { ?>
 				<h1>Ton mot de passe a bien été modifié 🥳</h1>
-				<a class="large" href="login.php">🔑 Je me reconnecte</a>	
+				<a class="button large" href="login.php">🔑 Je me reconnecte</a>	
 			<?php } ?>
 		</section>
 	</body>

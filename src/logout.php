@@ -30,7 +30,7 @@ else
             <?php } else if ($back) { ?>
                 <script>window.history.go(-1);</script>
             <?php } ?>
-            <a class="large" href=".">🏠 Retour à l'accueil</a>
+            <a class="button large" href=".">🏠 Retour à l'accueil</a>
         </section>
     </body>
 </html>

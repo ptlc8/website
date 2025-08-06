@@ -22,13 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			<?php if ($deleted) { ?>
 				<h1>Compte supprimé</h1>
 				<p class="helper">Ton compte a bien été supprimé. 😫</p>
-				<a href=".">🏠 Retouner à la page d'accueil</a>
+				<a class="button" href=".">🏠 Retouner à la page d'accueil</a>
 			<?php } else { ?>
 				<form method="post" action="">
 					<h1>Supprimer ton compte</h1>
 					<p class="error">⚠ Cette action est irréversible</p>
 					<input type="submit" value="Supprimer mon compte" class="bad" />
 				</form>
+            	<a class="button" href="account.php">👤 Retour au compte</a>
 			<?php } ?>
 		</section>
 	</body>

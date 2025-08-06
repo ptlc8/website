@@ -40,12 +40,12 @@ if (isset($_REQUEST['app'])) {
 		<section class="floating container">
 			<?php if (!$valid_request) { ?>
 				<h1>Mmh... Cette page a été mal appelée 🤯</h1>
-				<a href="javascript:history.back()">🔙 Revenir en arrière</a>
-				<a href=".">🏠 Retouner à la page d'accueil </a>
+				<a class="button" href="javascript:history.back()">🔙 Revenir en arrière</a>
+				<a class="button" href=".">🏠 Retouner à la page d'accueil </a>
 			<?php } else if ($app === null) { ?>
 				<h1>Euh... Cette application n'existe pas 🤓</h1>
-				<a href="javascript:history.back()">🔙 Revenir en arrière</a>
-				<a href=".">🏠 Retouner à la page d'accueil</a>
+				<a class="button" href="javascript:history.back()">🔙 Revenir en arrière</a>
+				<a class="button" href=".">🏠 Retouner à la page d'accueil</a>
 			<?php } else if (!$disconnected) { ?>
 				<form method="post" action="">
 					<h1>Déconnecter de <u><?= htmlspecialchars($app['name']) ?></u></h1>

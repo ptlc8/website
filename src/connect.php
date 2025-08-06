@@ -37,12 +37,12 @@ if (isset($_REQUEST['app'])) {
 			<?php
 			if (!$valid_request) { ?>
 				<h1>Mmh... Cette page a été mal appelée 🤯</h1>
-				<a href="javascript:history.back()">🔙 Revenir en arrière</a>
-				<a href=".">🏠 Retouner à la page d'accueil </a>
+				<a class="button" href="javascript:history.back()">🔙 Revenir en arrière</a>
+				<a class="button" href=".">🏠 Retouner à la page d'accueil </a>
 			<?php } else if ($app === null) { ?>
 				<h1>Euh... Cette application n'existe pas 🤓</h1>
-				<a href="javascript:history.back()">🔙 Revenir en arrière</a>
-				<a href=".">🏠 Retouner à la page d'accueil</a>
+				<a class="button" href="javascript:history.back()">🔙 Revenir en arrière</a>
+				<a class="button" href=".">🏠 Retouner à la page d'accueil</a>
 			<?php } else if ($connected) { ?>
 				<h1><u><?= htmlspecialchars($app['name']) ?></u> connecté</h1>
 				<p class="helper">Cette application a été connecté(e) à ton compte. 🎉</p>
@@ -64,8 +64,8 @@ if (isset($_REQUEST['app'])) {
 					<input type="submit" value="Connecter" class="good" autofocus />
 				</form>
 			<?php } ?>
-			<a href="account.php">👤 Mon compte</a>
-			<a href="login.php?go=<?= urlencode($_SERVER['REQUEST_URI']) ?>">🔁 Changer de compte</a>
+			<a class="button" href="account.php">👤 Mon compte</a>
+			<a class="button" href="login.php?go=<?= urlencode($_SERVER['REQUEST_URI']) ?>">🔁 Changer de compte</a>
 		</section>
 	</body>
 </html>

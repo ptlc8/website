@@ -1,10 +1,12 @@
 CREATE TABLE `USERS` (
   `id` int(11) NOT NULL COMMENT 'id de l''utilisateur',
-  `email` varchar(64) COLLATE utf8_unicode_ci NOT NULL COMMENT 'E-mail de l''utilisateur',
-  `name` tinytext COLLATE utf8_unicode_ci NOT NULL COMMENT 'nom de l''utilisateur',
-  `password` varchar(128) COLLATE utf8_unicode_ci NOT NULL COMMENT 'mot de passe de l''utilisateur',
+  `email` varchar(64) COLLATE utf8_unicode_ci NOT NULL COMMENT 'E-mail',
+  `name` tinytext COLLATE utf8_unicode_ci NOT NULL COMMENT 'Pseudonyme',
+  `password` varchar(128) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Mot de passe haché',
   `firstName` tinytext COLLATE utf8_unicode_ci NOT NULL COMMENT 'Prénom',
-  `lastName` tinytext COLLATE utf8_unicode_ci NOT NULL COMMENT 'Nom de famille'
+  `lastName` tinytext COLLATE utf8_unicode_ci NOT NULL COMMENT 'Nom de famille',
+  `createdAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date de création',
+  `updatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Date de dernière modification'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 ALTER TABLE `USERS`
