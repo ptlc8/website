@@ -12,14 +12,14 @@ if (isset($_REQUEST['username'])) {
 		$error = 'La vérification de ton humanité à échouer, réessaye 👽';
 	} else {
 		// envoi de l'e-mail
-		$user = request_database("SELECT email, id, name FROM USERS WHERE name = '", $_REQUEST['username'], "'")->fetch_assoc();
+		$user = request_database('SELECT email, id, name FROM USERS WHERE name = ', $_REQUEST['username'])->fetch_assoc();
 		if ($user !== null) {
 			$success = true;
 			$email = $user['email'];
 			$name = htmlspecialchars($user['name']);
 			do $token = generate_token(32);
-			while (request_database("SELECT * FROM FORGOTREQUEST WHERE token = ', $token, '")->num_rows !== 0);
-			request_database("REPLACE INTO `FORGOTREQUEST` (`userId`, `token`, `expire`) VALUES ('", $user['id'], "', '", $token, "', CURDATE() + INTERVAL 7 DAY)");
+			while (request_database('SELECT * FROM FORGOTREQUEST WHERE token = ', $token)->num_rows !== 0);
+			request_database('REPLACE INTO `FORGOTREQUEST` (`userId`, `token`, `expire`) VALUES (', $user['id'], ', ', $token, ', CURDATE() + INTERVAL 7 DAY)');
 			$url = get_protocol().'://'.get_host().'/reset-password.php?token='.$token;
 			$mail = <<<MAIL
 <html>

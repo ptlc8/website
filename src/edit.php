@@ -1,42 +1,42 @@
 <?php
 $error = null;
-include("api/init.php");
+include('api/init.php');
 
 $user = login_from_session();
 if ($user == null) {
-    exit(header("Location: login.php?go=".urlencode($_SERVER['REQUEST_URI'])));
+    exit(header('Location: login.php?go='.urlencode($_SERVER['REQUEST_URI'])));
 }
 
 // modifier un utilisateur (hors id)
 function update_user($id, $username, $email, $newpassword, $newpassword2, $firstname, $lastname) {
 	$frags = [];
 	/*if (isset($username) && strlen($username) > 0) {
-    	if (request_database("SELECT * FROM USERS WHERE `name` = '", $username, "' AND `id` != '", $id, "'")->num_rows !== 0)
+    	if (request_database('SELECT * FROM USERS WHERE `name` = ', $username, ' AND `id` != ', $id)->num_rows !== 0)
 			return 'Ce nom d\'utilisateur est déjà utilisé 😦';
-		array_push($frags, "', name = '", $username);
+		array_push($frags, ', name = ', $username);
 	}*/
 	if (isset($email) && strlen($email) > 0) {
-    	if (request_database("SELECT * FROM USERS WHERE `email` = '", $email, "' AND `id` != '", $id, "'")->num_rows !== 0)
+    	if (request_database('SELECT * FROM USERS WHERE `email` = ', $email, ' AND `id` != ', $id)->num_rows !== 0)
 			return 'Cette adresse e-mail est déjà utilisée 🤔';
-		array_push($frags, "', email = '", $email);
+		array_push($frags, ', email = ', $email);
 	}
 	if ((isset($newpassword) && strlen($newpassword) > 0) || (isset($newpassword2) && strlen($newpassword2) > 0)) {
     	if (!isset($newpassword) || strlen($newpassword) < 4)
 			return 'Ton nouveau mot de passe est vraiment trop court 😵';
     	else if ($newpassword !== $newpassword2)
 			return 'Tu n\'as pas écrit 2 le même nouveau mot de passe 🥴';
-		array_push($frags, "', password = '", hash('sha512', $newpassword));
+		array_push($frags, ', password = ', hash('sha512', $newpassword));
 	}
 	if (isset($firstname) && strlen($firstname) > 0) {
-		array_push($frags, "', firstName = '", $firstname);
+		array_push($frags, ', firstName = ', $firstname);
 	}
 	if (isset($lastname) && strlen($lastname) > 0) {
-		array_push($frags, "', lastName = '", $lastname);
+		array_push($frags, ', lastName = ', $lastname);
 	}
     if (count($frags) == 0)
         return null;
-	$frags[0] = preg_replace("/',/", "UPDATE `USERS` SET", $frags[0], 1);
-	array_push($frags, "' WHERE `id` = '", $id, "'");
+	$frags[0] = preg_replace('/,/', 'UPDATE `USERS` SET', $frags[0], 1);
+	array_push($frags, ' WHERE `id` = ', $id);
     print_r($frags);
 	request_database(...$frags);
 	return null;

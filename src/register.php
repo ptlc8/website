@@ -5,10 +5,10 @@ include('api/init.php');
 
 if (isset($_REQUEST['username'], $_REQUEST['email'], $_REQUEST['password'], $_REQUEST['password2'], $_REQUEST['firstname'], $_REQUEST['lastname'])) {
 	// teste si le nom d'utilisateur est déjà pris
-	if (request_database("SELECT * FROM USERS WHERE `name` = '", $_REQUEST['username'], "'")->num_rows !== 0)
+	if (request_database('SELECT * FROM USERS WHERE `name` = ', $_REQUEST['username'])->num_rows !== 0)
 		$error = 'Ce nom d\'utilisateur est déjà utilisé 😦';
 	// teste si l'adresse e-mail est déjà prise
-	else if (request_database("SELECT * FROM USERS WHERE `email` = '", $_REQUEST['email'], "'")->num_rows !== 0)
+	else if (request_database('SELECT * FROM USERS WHERE `email` = ', $_REQUEST['email'])->num_rows !== 0)
 		$error = 'Cette adresse e-mail est déjà utilisée 🤔';
 	// teste si le mot de passe n'est pas trop court
 	else if (strlen($_REQUEST['password']) < 4)
@@ -25,7 +25,7 @@ if (isset($_REQUEST['username'], $_REQUEST['email'], $_REQUEST['password'], $_RE
 	// Inscription
 	else {
 		$hashed_password = hash('sha512', $_POST['password']);
-		request_database("INSERT INTO `USERS` (`email`, `name`, `password`, `firstName`, `lastName`) VALUES ('",$_REQUEST['email'],"', '",$_REQUEST['username'],"', '",$hashed_password,"', '",$_REQUEST['firstname'],"', '",$_REQUEST['lastname'],"');");
+		request_database('INSERT INTO `USERS` (`email`, `name`, `password`, `firstName`, `lastName`) VALUES (', $_REQUEST['email'], ', ', $_REQUEST['username'], ', ', $hashed_password, ', ', $_REQUEST['firstname'], ', ', $_REQUEST['lastname'], ')');
 		session_start();
 		$_SESSION['username'] = $_REQUEST['username'];
 		$_SESSION['password'] = $hashed_password;

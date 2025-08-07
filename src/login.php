@@ -1,7 +1,7 @@
 <?php
 $fail = false;
 $close = false;
-include("api/init.php");
+include('api/init.php');
 if (isset($_REQUEST['username'], $_POST['password'])) {
 	$user = login($_REQUEST['username'], $_POST['password']);
 	if ($user !== null) {

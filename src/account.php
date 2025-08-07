@@ -1,10 +1,10 @@
 <?php
-include("api/init.php");
+include('api/init.php');
 $user = login_from_session();
 if ($user == null) {
-    exit(header("Location: login.php?go=".urlencode($_SERVER['REQUEST_URI'])));
+    exit(header('Location: login.php?go='.urlencode($_SERVER['REQUEST_URI'])));
 }
-$tokens = request_database("SELECT * FROM `TOKENS` JOIN `APPS` ON app = id WHERE `user` = '".$user['id']."'")->fetch_all(MYSQLI_ASSOC);
+$tokens = request_database('SELECT * FROM `TOKENS` JOIN `APPS` ON app = id WHERE `user` = '.$user['id'])->fetch_all(MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html>
@@ -14,7 +14,7 @@ $tokens = request_database("SELECT * FROM `TOKENS` JOIN `APPS` ON app = id WHERE
         <link rel="stylesheet" href="style.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script>
-            window.addEventListener("load", () => {
+            window.addEventListener('load', () => {
                 document.querySelectorAll('time[data-localize]').forEach(el => {
                     const utc = el.getAttribute('datetime');
                     const date = new Date(utc);

@@ -67,14 +67,14 @@ function request_database(...$request_frags) {
 	$request = '';
 	$var = false;
 	foreach ($request_frags as $frag) {
-		$request .= ($var ? escape_database_value($frag) : $frag);
+		$request .= ($var ? "'".escape_database_value($frag)."'" : $frag);
 		$var = !$var;
 	}
 	$mysqli = get_database();
 	if (!$result = $mysqli->query($request)) {
 		echo 'Erreur de requête côté serveur, veuillez réessayer plus tard';
 		if (str_ends_with(get_host(), 'localhost'))
-			echo " : $request";
+			echo ' : '.$request;
 		exit;
 	}
 	return $result;
@@ -85,14 +85,14 @@ function login_from_session() {
 	session_start();
 	if (!isset($_SESSION['username'], $_SESSION['password']))
 		return null;
-	return request_database("SELECT * FROM USERS WHERE `name` = '", $_SESSION['username'], "' and `password` = '", $_SESSION['password'], "'")->fetch_assoc();
+	return request_database('SELECT * FROM USERS WHERE `name` = ', $_SESSION['username'], ' and `password` = ', $_SESSION['password'])->fetch_assoc();
 }
 
 // connexion à un compte avec un nom d'utilisateur et un mot de passe
 function login($username, $password) {
 	session_start();
 	$password = hash('sha512', $password);
-	$user = request_database("SELECT * FROM USERS WHERE `name` = '", $username, "' and `password` = '", $password, "'")->fetch_assoc();
+	$user = request_database('SELECT * FROM USERS WHERE `name` = ', $username, ' and `password` = ', $password)->fetch_assoc();
 	if ($user !== null) {
 		$_SESSION['username'] = $username;
 		$_SESSION['password'] = $password;

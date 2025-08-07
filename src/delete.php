@@ -1,11 +1,11 @@
 <?php
 $deleted = false;
-include("api/init.php");
+include('api/init.php');
 $user = login_from_session();
 if ($user === null)
-	exit(header("Location: login.php?go=".urlencode($_SERVER['REQUEST_URI'])));
+	exit(header('Location: login.php?go='.urlencode($_SERVER['REQUEST_URI'])));
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	request_database("DELETE FROM `USERS` WHERE `id` = '", $user['id'], "';");
+	request_database('DELETE FROM `USERS` WHERE `id` = ', $user['id']);
 	$deleted = true;
 }
 ?>

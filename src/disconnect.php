@@ -3,16 +3,16 @@ $valid_request = false;
 $close = false;
 $back = false;
 
-include("api/init.php");
+include('api/init.php');
 if (isset($_REQUEST['app'])) {
 	$valid_request = true;
-	$app = request_database("SELECT * FROM APPS WHERE id = '", $_REQUEST['app'], "';")->fetch_assoc();
+	$app = request_database('SELECT * FROM APPS WHERE id = ', $_REQUEST['app'])->fetch_assoc();
 	if ($app !== null) {
 		$user = login_from_session();
 		if ($user === null)
-			exit(header("Location: login.php?go=".urlencode($_SERVER['REQUEST_URI'])));
+			exit(header('Location: login.php?go='.urlencode($_SERVER['REQUEST_URI'])));
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			request_database("DELETE FROM `TOKENS` WHERE `user` = '", $user['id'], "' AND app = '", $_REQUEST['app'], "';");
+			request_database('DELETE FROM `TOKENS` WHERE `user` = ', $user['id'], ' AND app = ', $_REQUEST['app']);
 			/*if (isset($_REQUEST['go']))
 				exit(header('Location: '.$_REQUEST['go']));*/
 			if (isset($_REQUEST['closeafter']))

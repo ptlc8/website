@@ -1,17 +1,17 @@
 <?php
 $valid_request = false;
 
-include("api/init.php");
+include('api/init.php');
 if (isset($_REQUEST['app'])) {
 	$valid_request = true;
-	$app = request_database("SELECT * FROM APPS WHERE id = '", $_REQUEST['app'], "';")->fetch_assoc();
+	$app = request_database('SELECT * FROM APPS WHERE id = ', $_REQUEST['app'])->fetch_assoc();
 	if ($app !== null) {
 		$user = login_from_session();
 		if ($user === null)
-			exit(header("Location: login.php?go=".urlencode($_SERVER['REQUEST_URI'])));
+			exit(header('Location: login.php?go='.urlencode($_SERVER['REQUEST_URI'])));
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$token = generate_token(16);
-			request_database("INSERT INTO `TOKENS` (`token`, `user`, `app`) VALUES ('", $token, "', '", $user['id'], "', '", $_REQUEST['app'], "') ON DUPLICATE KEY UPDATE `token` = '", $token, "';");
+			request_database('INSERT INTO `TOKENS` (`token`, `user`, `app`) VALUES (', $token, ', ', $user['id'], ', ', $_REQUEST['app'], ') ON DUPLICATE KEY UPDATE `token` = ', $token);
 			$connected = true;
 			$params = $_REQUEST['params'] ?? '';
 			exit(header('Location: '.$app['returnUrl'].$token.'&'.$params));
