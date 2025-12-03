@@ -13,7 +13,7 @@ Actuellement déployé sur [ambi.dev](https://ambi.dev).
 
  - cloner le projet avec git
  - créer un fichier sitemap.json à la racine du projet en prenant exemple sur [sitemap.json.example](sitemap.json.example) ou à un autre emplacement en spécifiant le chemin dans la variable d'environnement `SITEMAP_PATH`
- - optionnel : mettre les variables d'environnement `HCAPTCHA_SECRET`, `HCAPTCHA_SITEKEY` et `MAIL_SOCKET` dans un fichier `.env` à la racine du projet
+ - optionnel : mettre les variables d'environnement `HCAPTCHA_SECRET`, `HCAPTCHA_SITEKEY` et `MAIL_HOST` dans un fichier `.env` à la racine du projet
  - lancer les conteneurs docker avec `docker compose up -d`
 
 

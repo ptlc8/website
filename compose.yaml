@@ -14,11 +14,12 @@ services:
     build:
       context: .
       dockerfile: ./fast-cgi.Dockerfile
+      args:
+        MAIL_HOST: ${MAIL_HOST:-mail}
     expose:
       - 9000
     volumes:
       - ${SITEMAP_PATH:-./sitemap.json}:/var/www/html/sitemap.json:ro
-      - ${MAIL_SOCKET:-/run/mail.sock}:/run/mail.sock:rw
     environment:
       DB_HOST: database
       DB_USER: website
@@ -30,6 +31,9 @@ services:
       SITE_AUTHOR: ${SITE_AUTHOR:-}
       HCAPTCHA_SECRET: ${HCAPTCHA_SECRET:-}
       HCAPTCHA_SITEKEY: ${HCAPTCHA_SITEKEY:-}
+    networks:
+      - default
+      - mail
     depends_on:
       - database
     restart: always
@@ -45,6 +49,12 @@ services:
       MARIADB_PASSWORD: secret
       MARIADB_DATABASE: website
     restart: always
+
 volumes:
   database-data:
     driver: local
+
+networks:
+  mail:
+    name: mail
+    driver: bridge
