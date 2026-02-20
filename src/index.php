@@ -1,4 +1,4 @@
-<?php include('api/init.php'); ?>
+<?php include('init.php'); ?>
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
