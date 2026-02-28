@@ -30,10 +30,12 @@
 			<h1><?= htmlspecialchars(get_site_name()) ?></h1>
 			<a class="button" href="." title="Page de projets">Projets</a>
 			<a class="button" href="<?= get_protocol() ?>://status.<?= get_host() ?>" title="Page d'état">Statuts</a>
-			<a class="button" href="account.php" title="Page de compte" class="account">
-				Mon compte
-				<img src="avatar.php" alt="avatar" width="64" height="64" />
-			</a>
+			<?php if ($auth_url = get_auth_url()) { ?>
+				<a class="button" href="<?= $auth_url ?>" title="Page de compte" class="account">
+					Mon compte
+					<img src="<?= $auth_url ?>/avatar.php" alt="avatar" width="64" height="64" />
+				</a>
+			<?php } ?>
 		</header>
 
 		<div id="projects" class="deck">

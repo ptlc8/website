@@ -38,6 +38,11 @@ function get_site_data() {
 	return $site_data;
 }
 
+// obtenir l'URL du serveur d'authentification
+function get_auth_url() {
+	return get_config('AUTH_URL') ?? '';
+}
+
 // obtenir la liste des projets
 function get_sitemap() {
 	return json_decode(file_get_contents('sitemap.json'));
