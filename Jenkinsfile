@@ -8,6 +8,7 @@ pipeline {
         string(name: 'SITE_DESCRIPTION', defaultValue: params.SITE_DESCRIPTION ?: null, description: 'Site description')
         string(name: 'SITE_KEYWORDS', defaultValue: params.SITE_KEYWORDS ?: null, description: 'Site keywords')
         string(name: 'SITE_AUTHOR', defaultValue: params.SITE_AUTHOR ?: null, description: 'Site author')
+        string(name: 'FEATURED_PROJECTS', defaultValue: params.FEATURED_PROJECTS ?: null, description: 'Featured projects (comma-separated slugs)')
     }
 
     stages {

@@ -53,18 +53,66 @@
 			</section>
 			<section>
 				<p>Ce site web est entièrement hébergé localement</p>
-				<p>[fonctionnement]</p>
+				<p>
+					Ce site est hébergé sur un serveur personnel à la maison, rendu accessible 
+					via un système de proxy inversé et un tunnel sécurisé. L'ensemble de 
+					l'infrastructure tourne dans des conteneurs Docker pour garantir isolation 
+					et portabilité.
+				</p>
 				<details>
 					<summary>Détails techniques</summary>
 					<ul>
-						<li>Docker</li>
-						<li>apache2 and apache-docker-proxy</li>
-						<li>[...]</li>
+						<li>Docker & Docker Compose</li>
+						<li>Apache (serveur web)</li>
+						<li>Reverse proxy (apache-docker-proxy)</li>
+						<li>SSL/TLS (Let's Encrypt ou Cloudflare)</li>
+						<li>Jenkins (déploiement automatisé)</li>
+						<li>Git & GitHub (versioning et centralisation du code)</li>
 					</ul>
 				</details>
 			</section>
 			<section>
-				[quelques projets qui pourraient être intéressants]
+				<h2>Projets mis en avant</h2>
+				<?php 
+				$featured = get_featured_projects();
+				if (count($featured) > 0) {
+				?>
+					<div class="deck">
+						<?php foreach ($featured as $subsite) {
+							$id = slugify($subsite->title);
+						?>
+							<div class="card" id="<?= $id ?>" style="background-color: <?= $subsite->color ?>;" onclick="location.href = '#<?= $id ?>'">
+								<img class="preview" alt="" src="<?= htmlspecialchars($subsite->preview ?? '') ?>" />
+								<div class="head">
+									<img src="<?= htmlspecialchars($subsite->img) ?>" width="128" alt="<?= htmlspecialchars($subsite->title) ?>" />
+									<h2 class="title"><?= htmlspecialchars($subsite->title) ?></h2>
+									<?php if (!empty($subsite->git)) { ?>
+										<a class="button git" href="<?= htmlspecialchars($subsite->git) ?>" target="_blank" title="Dépôt git">
+											<img src="assets/git.png" height="32" alt="git" />
+										</a>
+									<?php } ?>
+								</div>
+								<div class="body">
+									<?php if (!empty($subsite->description)) { ?>
+										<p><?= htmlspecialchars($subsite->description) ?></p>
+									<?php } ?>
+									<div class="buttons">
+										<?php foreach ($subsite->content as $button) { ?>
+											<a class="button" href="<?= $button->link ?? '#' ?>" title="<?= htmlspecialchars($button->title) ?>">
+												<?= htmlspecialchars($button->title) ?>
+											</a>
+										<?php } ?>
+									</div>
+								</div>
+							</div>
+						<?php } ?>
+					</div>
+				<?php } else { ?>
+					<p>Aucun projet mis en avant pour le moment.</p>
+				<?php } ?>
+				<div style="text-align: center; margin-top: 1em;">
+					<a class="button" href="projects.php">Voir tous les projets →</a>
+				</div>
 			</section>
 		</main>
 

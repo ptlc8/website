@@ -47,4 +47,24 @@ function get_auth_url() {
 function get_sitemap() {
 	return json_decode(file_get_contents('sitemap.json'));
 }
+
+// convertir un texte en slug
+function slugify($text) {
+	return strtolower(preg_replace('/[^a-z0-9]+/i', '-', $text));
+}
+
+// obtenir les projets mis en avant
+function get_featured_projects() {
+	$featured_ids = get_config('FEATURED_PROJECTS');
+	if (empty($featured_ids))
+		return [];
+	$ids = array_map('trim', explode(',', $featured_ids));
+	$sitemap = get_sitemap();
+	$featured = [];
+	foreach ($sitemap as $project) {
+		if (in_array(slugify($project->title), $ids))
+			$featured[] = $project;
+	}
+	return $featured;
+}
 ?>

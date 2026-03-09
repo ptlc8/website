@@ -43,7 +43,7 @@
 			<?php
 			$sitemap = get_sitemap();
 			foreach ($sitemap as $subsite) {
-				$id = strtolower(preg_replace('/[^a-z0-9]+/i', '-', $subsite->title));
+				$id = slugify($subsite->title);
 			?>
 				<div class="card" id="<?= $id ?>" style="background-color: <?= $subsite->color ?>;" onclick="location.href = '#<?= $id ?>'">
 					<img class="preview" alt="" src="<?= htmlspecialchars($subsite->preview) ?? '' ?>" />
