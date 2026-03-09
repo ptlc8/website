@@ -3,7 +3,7 @@
 <html lang="fr">
 	<head>
 		<meta charset="UTF-8" />
-		<title><?= htmlspecialchars(get_site_name()) ?></title>
+		<title><?= htmlspecialchars(get_site_name()) ?> - Projets</title>
 		<link rel="stylesheet" href="style.css" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" href="favicon.ico" />
@@ -28,11 +28,9 @@
 
 		<header>
 			<h1><?= htmlspecialchars(get_site_name()) ?></h1>
-			<nav>
-				<a class="button" href="." title="Page de projets">Accueil</a>
-				<a class="button" href="projects.php" title="Page de projets">Projets</a>
-				<a class="button" href="<?= get_protocol() ?>://status.<?= get_host() ?>" title="Page d'état">Statuts</a>
-			</nav>
+			<a class="button" href="." title="Page de projets">Accueil</a>
+			<a class="button" href="projects.php" title="Page de projets">Projets</a>
+			<a class="button" href="<?= get_protocol() ?>://status.<?= get_host() ?>" title="Page d'état">Statuts</a>
 			<?php if ($auth_url = get_auth_url()) { ?>
 				<a class="account button" href="<?= $auth_url ?>" title="Page de compte">
 					Mon compte
@@ -41,32 +39,38 @@
 			<?php } ?>
 		</header>
 
-		<main>
-			<section>
-				<h2>Bienvenue dans mon homelab !</h2>
-				<p>Celui-ci a pour but de :</p>
-				<ul>
-					<li>Présenter mes <a href="projects.php">projets</a> divers et variés</li>
-					<li>Me servir de laboratoire informatique</li>
-					<li>Atteindre une certaine indépendance numérique</li>
-				</ul>
-			</section>
-			<section>
-				<p>Ce site web est entièrement hébergé localement</p>
-				<p>[fonctionnement]</p>
-				<details>
-					<summary>Détails techniques</summary>
-					<ul>
-						<li>Docker</li>
-						<li>apache2 and apache-docker-proxy</li>
-						<li>[...]</li>
-					</ul>
-				</details>
-			</section>
-			<section>
-				[quelques projets qui pourraient être intéressants]
-			</section>
-		</main>
+		<div id="projects" class="deck">
+			<?php
+			$sitemap = get_sitemap();
+			foreach ($sitemap as $subsite) {
+				$id = strtolower(preg_replace('/[^a-z0-9]+/i', '-', $subsite->title));
+			?>
+				<div class="card" id="<?= $id ?>" style="background-color: <?= $subsite->color ?>;" onclick="location.href = '#<?= $id ?>'">
+					<img class="preview" alt="" src="<?= htmlspecialchars($subsite->preview) ?? '' ?>" />
+					<div class="head">
+						<img src="<?= htmlspecialchars($subsite->img) ?>" width="128" alt="<?= htmlspecialchars($subsite->title) ?>" />
+						<h2 class="title"><?= htmlspecialchars($subsite->title) ?></h2>
+						<?php if ($subsite->git) { ?>
+							<a class="button git" href="<?= htmlspecialchars($subsite->git) ?>" target="_blank" title="Dépôt git">
+								<img src="assets/git.png" height="32" alt="git" />
+							</a>
+						<?php } ?>
+					</div>
+					<div class="body">
+						<?php if ($subsite->description) { ?>
+							<p><?= htmlspecialchars($subsite->description) ?></p>
+						<?php } ?>
+						<div class="buttons">
+							<?php foreach ($subsite->content as $button) { ?>
+								<a class="button" href="<?= $button->link ?? '#' ?>" title="<?= htmlspecialchars($button->title) ?>">
+									<?= htmlspecialchars($button->title) ?>
+								</a>
+							<?php } ?>
+						</div>
+					</div>
+				</div>
+			<?php } ?>
+		</div>
 
 		<footer>
 			<?= htmlspecialchars(get_site_data()->copyright) ?>
