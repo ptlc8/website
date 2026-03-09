@@ -5,6 +5,8 @@
         "title": "Poképrof",
 		"git": "https://github.com/ptlc8/pokeprof",
 		"preview": "pokeprof/screenshot.jpg",
+		"description": "Transforme tes profs en cartes Pokémon ! Parce que pourquoi pas.",
+		"featured": true,
         "content": [
             {
                 "link": "/cards",
@@ -26,6 +28,8 @@
 		"title": "Smash Meme",
 		"git": "https://github.com/ptlc8/smashmeme",
 		"preview": "sm/screenshot.jpg",
+		"description": "Un Smash Bros avec tes memes préférés. Oui, c'est possible.",
+		"featured": true,
 		"content": [
 			{
 				"link": "/sm/play",
@@ -47,11 +51,12 @@
 		"title": "Roue des choix",
 		"git": "https://github.com/ptlc8/wheel",
 		"preview": "wheel/wheel.png",
+		"description": "Indécis ? Laisse la roue décider pour toi !",
 		"content": [
 			{
 				"link": "wheel",
 				"title": "Essayer"
 			}
 		]
-	},
+	}
 ]

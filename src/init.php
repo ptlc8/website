@@ -18,7 +18,7 @@ function get_host() {
 function get_protocol() {
 	if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
 		return 'https';
-	if (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
+	if (($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https')
 		return 'https';
 	return 'http';
 }
@@ -46,5 +46,21 @@ function get_auth_url() {
 // obtenir la liste des projets
 function get_sitemap() {
 	return json_decode(file_get_contents('sitemap.json'));
+}
+
+// convertir un texte en slug
+function slugify($text) {
+	return strtolower(preg_replace('/[^a-z0-9]+/i', '-', $text));
+}
+
+// obtenir les projets mis en avant
+function get_featured_projects() {
+	$sitemap = get_sitemap();
+	$featured = [];
+	foreach ($sitemap as $project) {
+		if ($project->featured ?? false)
+			$featured[] = $project;
+	}
+	return $featured;
 }
 ?>

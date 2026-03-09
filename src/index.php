@@ -3,7 +3,7 @@
 <html lang="fr">
 	<head>
 		<meta charset="UTF-8" />
-		<title><?= htmlspecialchars(get_site_name()) ?> - Projets</title>
+		<title><?= htmlspecialchars(get_site_name()) ?></title>
 		<link rel="stylesheet" href="style.css" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" href="favicon.ico" />
@@ -28,51 +28,102 @@
 
 		<header>
 			<h1><?= htmlspecialchars(get_site_name()) ?></h1>
-			<a class="button" href="." title="Page de projets">Projets</a>
-			<a class="button" href="<?= get_protocol() ?>://status.<?= get_host() ?>" title="Page d'état">Statuts</a>
+			<nav>
+				<a class="button" href="." title="Page de projets">Accueil</a>
+				<a class="button" href="projects.php" title="Page de projets">Projets</a>
+				<a class="button" href="<?= get_protocol() ?>://status.<?= get_host() ?>" title="Page d'état">Statuts</a>
+			</nav>
 			<?php if ($auth_url = get_auth_url()) { ?>
-				<a class="button" href="<?= $auth_url ?>" title="Page de compte" class="account">
+				<a class="account button" href="<?= $auth_url ?>" title="Page de compte">
 					Mon compte
 					<img src="<?= $auth_url ?>/avatar.php" alt="avatar" width="64" height="64" />
 				</a>
 			<?php } ?>
 		</header>
 
-		<div id="projects" class="deck">
-			<?php
-			$sitemap = get_sitemap();
-			foreach ($sitemap as $subsite) {
-				$id = strtolower(preg_replace('/[^a-z0-9]+/i', '-', $subsite->title));
-			?>
-				<div class="card" id="<?= $id ?>" style="background-color: <?= $subsite->color ?>;" onclick="location.href = '#<?= $id ?>'">
-					<img class="preview" alt="" src="<?= htmlspecialchars($subsite->preview) ?? '' ?>" />
-					<div class="head">
-						<img src="<?= htmlspecialchars($subsite->img) ?>" width="128" alt="<?= htmlspecialchars($subsite->title) ?>" />
-						<h2 class="title"><?= htmlspecialchars($subsite->title) ?></h2>
-						<?php if ($subsite->git) { ?>
-							<a class="button git" href="<?= htmlspecialchars($subsite->git) ?>" target="_blank" title="Dépôt git">
-								<img src="assets/git.png" height="32" alt="git" />
-							</a>
+		<main>
+			<section class="hero">
+				<h2>Bienvenue dans mon archipel d'internet</h2>
+				<p>Un espace personnel où je partage mes projets et expérimentations :</p>
+				<ul>
+					<li data-icon="🎮">Des <a href="projects.php">projets</a> variés (jeux, outils, etc.)</li>
+					<li data-icon="🧪">Un terrain de jeu pour tester de nouvelles idées</li>
+					<li data-icon="🏠">Une <a href="#hebergement">infrastructure maison</a> pour l'indépendance numérique</li>
+				</ul>
+			</section>
+
+			<section>
+				<h2>Projets mis en avant</h2>
+				<?php 
+				$featured = get_featured_projects();
+				if (count($featured) > 0) {
+				?>
+					<div class="deck">
+						<?php foreach ($featured as $subsite) {
+							$id = slugify($subsite->title);
+							$firstLink = !empty($subsite->content) ? ($subsite->content[0]->link ?? '#') : '#';
+						?>
+							<div class="card" id="<?= $id ?>" style="background-color: <?= $subsite->color ?>;" onclick="location.href='<?= $firstLink ?>'">
+								<img class="preview" alt="" src="<?= htmlspecialchars($subsite->preview ?? '') ?>" />
+								<div class="head">
+									<img src="<?= htmlspecialchars($subsite->img) ?>" width="128" alt="<?= htmlspecialchars($subsite->title) ?>" />
+									<h2 class="title"><?= htmlspecialchars($subsite->title) ?></h2>
+									<?php if ($subsite->git ?? false) { ?>
+										<a class="button git" href="<?= htmlspecialchars($subsite->git) ?>" target="_blank" title="Dépôt git" onclick="event.stopPropagation()">
+											<img src="assets/git.png" height="32" alt="git" />
+										</a>
+									<?php } ?>
+								</div>
+								<div class="body">
+									<?php if ($subsite->description ?? false) { ?>
+										<p><?= htmlspecialchars($subsite->description) ?></p>
+									<?php } ?>
+									<div class="buttons">
+										<?php foreach ($subsite->content as $button) { ?>
+											<a class="button" href="<?= $button->link ?? '#' ?>" title="<?= htmlspecialchars($button->title ?? '') ?>" onclick="event.stopPropagation()">
+												<?= htmlspecialchars($button->title ?? '') ?>
+											</a>
+										<?php } ?>
+									</div>
+								</div>
+							</div>
 						<?php } ?>
 					</div>
-					<div class="body">
-						<?php if ($subsite->description) { ?>
-							<p><?= htmlspecialchars($subsite->description) ?></p>
-						<?php } ?>
-						<div class="buttons">
-							<?php foreach ($subsite->content as $button) { ?>
-								<a class="button" href="<?= $button->link ?? '#' ?>" title="<?= htmlspecialchars($button->title) ?>">
-									<?= htmlspecialchars($button->title) ?>
-								</a>
-							<?php } ?>
-						</div>
-					</div>
+				<?php } else { ?>
+					<p>Aucun projet mis en avant pour le moment.</p>
+				<?php } ?>
+				<div style="text-align: center; margin-top: 1em;">
+					<a class="button" href="projects.php">Découvrir tous les projets →</a>
 				</div>
-			<?php } ?>
-		</div>
+			</section>
+
+			<section id="hebergement">
+				<h2>Hébergement maison</h2>
+				<p>
+					Ce site tourne sur un serveur personnel hébergé chez moi. 
+					Pourquoi ? Pour garder le contrôle sur mes données, apprendre en pratiquant, 
+					et construire une infrastructure résiliente.
+				</p>
+				<details>
+					<summary>🤓 Détails techniques</summary>
+					<p>
+						Rendu accessible via un système de proxy inversé et un tunnel sécurisé. 
+						L'ensemble tourne dans des conteneurs Docker pour garantir isolation et portabilité.
+					</p>
+					<ul>
+						<li data-icon="🐋">Docker & Docker Compose</li>
+						<li data-icon="🔀">Reverse proxy (<a href="https://github.com/ptlc8/apache-docker-proxy" target="_blank">apache-docker-proxy</a>)</li>
+						<li data-icon="🔒">SSL/TLS (Let's Encrypt ou Cloudflare)</li>
+						<li data-icon="⚙️">Jenkins (déploiement automatisé)</li>
+						<li data-icon="📦">Git & GitHub (versioning et centralisation du code)</li>
+					</ul>
+				</details>
+			</section>
+		</main>
 
 		<footer>
 			<?= htmlspecialchars(get_site_data()->copyright) ?>
+			- Fait maison avec ❤️
 		</footer>
 	</body>
 </html>
