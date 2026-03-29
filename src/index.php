@@ -124,6 +124,74 @@
 		<footer>
 			<?= htmlspecialchars(get_site_data()->copyright) ?>
 			- Fait maison avec ❤️
+			<span id="confetti-trigger" style="cursor: pointer; margin-left: 0.5em;" title="Cliquer pour faire la fête !">🎉</span>
 		</footer>
+
+		<script>
+		// Easter eggs
+		(function() {
+			// Fonction pour créer des confettis
+			function createConfetti() {
+				const confetti = document.createElement('div');
+				confetti.className = 'confetti';
+				confetti.style.left = Math.random() * 100 + '%';
+				confetti.style.top = '-10px';
+				const colors = ['#ff0', '#0f0', '#0ff', '#f0f', '#f00', '#ff8c00', '#00ff00', '#ff1493'];
+				confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+				confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+				document.body.appendChild(confetti);
+				setTimeout(() => confetti.remove(), 4000);
+			}
+
+			// Clic sur emoji 🎉 dans le footer
+			const confettiTrigger = document.getElementById('confetti-trigger');
+			if (confettiTrigger) {
+				confettiTrigger.addEventListener('click', function() {
+					// Créer plein de confettis pendant 3 secondes
+					let count = 0;
+					const interval = setInterval(() => {
+						createConfetti();
+						count++;
+						if (count >= 15) { // 15 confettis au total
+							clearInterval(interval);
+						}
+					}, 200);
+					console.log('🎉 Confettis lancés !');
+				});
+			}
+
+			// Triple-click sur le titre (désactiver la sélection)
+			const title = document.querySelector('header h1');
+			let clickCount = 0;
+			let clickTimer = null;
+
+			title.style.userSelect = 'none';
+			title.style.cursor = 'pointer';
+
+			title.addEventListener('click', function(e) {
+				e.preventDefault();
+				clickCount++;
+				if (clickTimer) clearTimeout(clickTimer);
+				
+				if (clickCount === 3) {
+					this.classList.toggle('secret-active');
+					clickCount = 0;
+					console.log('🌈 Mode arc-en-ciel activé !');
+				} else {
+					clickTimer = setTimeout(() => {
+						clickCount = 0;
+					}, 500);
+				}
+			});
+
+			// Bonus: double-clic sur le footer
+			const footer = document.querySelector('footer');
+			footer.addEventListener('dblclick', function() {
+				const hearts = ['❤️', '💚', '💙', '💜', '🧡', '💛'];
+				const randomHeart = hearts[Math.floor(Math.random() * hearts.length)];
+				this.innerHTML = this.innerHTML.replace('❤️', randomHeart);
+			});
+		})();
+		</script>
 	</body>
 </html>
