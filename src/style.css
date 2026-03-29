@@ -418,3 +418,117 @@ footer {
 	background-position: center center;
 	pointer-events: none;
 }
+
+
+/* Easter egg: Disco Mode */
+
+body.disco-mode {
+	animation: disco-lights 0.5s linear infinite !important;
+}
+
+@keyframes disco-lights {
+	0% { background-color: #ff0; }
+	20% { background-color: #0f0; }
+	40% { background-color: #0ff; }
+	60% { background-color: #00f; }
+	80% { background-color: #f0f; }
+	100% { background-color: #f00; }
+}
+
+#disco-ball-container {
+	position: fixed;
+	top: 50px;
+	left: 50%;
+	transform: translateX(-50%);
+	display: none;
+	z-index: 9999;
+	pointer-events: none;
+}
+
+body.disco-mode #disco-ball-container {
+	display: block;
+}
+
+.disco-ball {
+	width: 200px;
+	height: 200px;
+	border-radius: 50%;
+	background: 
+		radial-gradient(circle at 35% 35%, rgba(255,255,255,1), rgba(255,255,255,0.6) 20%, rgba(200,200,200,0.8) 40%, rgba(150,150,150,0.9) 60%, rgba(100,100,100,1) 100%);
+	box-shadow: 
+		0 0 60px rgba(255, 255, 255, 0.9),
+		inset -30px -30px 60px rgba(0, 0, 0, 0.4),
+		inset 30px 30px 60px rgba(255, 255, 255, 0.3),
+		0 0 100px rgba(255, 255, 255, 0.5);
+	position: relative;
+}
+
+.disco-ball::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	border-radius: 50%;
+	background-image: 
+		repeating-linear-gradient(0deg, transparent, transparent 14px, rgba(0,0,0,0.2) 14px, rgba(0,0,0,0.2) 15px, transparent 15px, transparent 16px, rgba(255,255,255,0.15) 16px, rgba(255,255,255,0.15) 17px),
+		repeating-linear-gradient(90deg, transparent, transparent 14px, rgba(0,0,0,0.2) 14px, rgba(0,0,0,0.2) 15px, transparent 15px, transparent 16px, rgba(255,255,255,0.15) 16px, rgba(255,255,255,0.15) 17px);
+	animation: disco-facets-spin 3s linear infinite;
+}
+
+@keyframes disco-facets-spin {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
+}
+
+.light-rays {
+	position: absolute;
+	top: 100px;
+	left: 100px;
+	width: 0;
+	height: 0;
+	animation: rays-rotate 4s linear infinite;
+}
+
+.light-ray {
+	position: absolute;
+	width: 0;
+	height: 0;
+	border-left: 40px solid transparent;
+	border-right: 40px solid transparent;
+	border-top: 400px solid;
+	opacity: 0.6;
+	transform-origin: 40px 0;
+	filter: blur(10px);
+}
+
+.light-ray:nth-child(1) { 
+	border-top-color: #ff0; 
+	transform: rotate(0deg);
+}
+.light-ray:nth-child(2) { 
+	border-top-color: #0ff; 
+	transform: rotate(60deg);
+}
+.light-ray:nth-child(3) { 
+	border-top-color: #f0f; 
+	transform: rotate(120deg);
+}
+.light-ray:nth-child(4) { 
+	border-top-color: #0f0; 
+	transform: rotate(180deg);
+}
+.light-ray:nth-child(5) { 
+	border-top-color: #f80; 
+	transform: rotate(240deg);
+}
+.light-ray:nth-child(6) { 
+	border-top-color: #80f; 
+	transform: rotate(300deg);
+}
+
+@keyframes rays-rotate {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
+}

@@ -26,6 +26,19 @@
 			<div id="april-fool"></div>
 		<?php } ?>
 
+		<!-- Boule disco pour easter egg -->
+		<div id="disco-ball-container">
+			<div class="light-rays">
+				<div class="light-ray"></div>
+				<div class="light-ray"></div>
+				<div class="light-ray"></div>
+				<div class="light-ray"></div>
+				<div class="light-ray"></div>
+				<div class="light-ray"></div>
+			</div>
+			<div class="disco-ball"></div>
+		</div>
+
 		<header>
 			<h1><?= htmlspecialchars(get_site_name()) ?></h1>
 			<nav>
@@ -125,5 +138,24 @@
 			<?= htmlspecialchars(get_site_data()->copyright) ?>
 			- Fait maison avec ❤️
 		</footer>
+
+		<script>
+		// Easter egg: Mode Disco
+		(function() {
+			// Secret: taper "disco" n'importe où
+			let discoSequence = '';
+			document.addEventListener('keydown', function(e) {
+				if (e.key.length === 1 && !e.metaKey && !e.ctrlKey && !e.altKey) {
+					discoSequence += e.key.toLowerCase();
+					if (discoSequence.includes('disco')) {
+						document.body.classList.toggle('disco-mode');
+						discoSequence = '';
+						console.log('🪩 Disco mode activé !');
+					}
+					if (discoSequence.length > 10) discoSequence = '';
+				}
+			});
+		})();
+		</script>
 	</body>
 </html>
