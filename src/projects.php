@@ -41,7 +41,7 @@
 			<?php } ?>
 		</header>
 
-		<div id="projects" class="deck">
+		<main id="projects" class="deck">
 			<?php
 			$sitemap = get_sitemap();
 			foreach ($sitemap as $subsite) {
@@ -73,7 +73,7 @@
 					</div>
 				</div>
 			<?php } ?>
-		</div>
+		</main>
 
 		<footer>
 			<?= htmlspecialchars(get_site_data()->copyright) ?>

@@ -131,10 +131,11 @@ main {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
+	padding: 16px;
+	gap: 32px;
 }
 
 section {
-	margin: 16px;
 	display: flex;
 	flex-direction: column;
 	padding: 16px 32px;
@@ -153,8 +154,9 @@ h2 {
     margin: 10px 0;
 }
 
-p, ul {
+p {
     margin: 0;
+    text-align: justify;
 }
 
 a {
@@ -169,9 +171,12 @@ summary {
     body {
         max-width: 100%;
     }
+    main {
+        padding: 8px 16px;
+        gap: 16px;
+    }
     section {
         padding: 16px;
-        margin: 8px 16px;
     }
 }
 
@@ -216,6 +221,7 @@ section.hero ul li::before {
 /* Technical details list */
 #hebergement ul {
 	list-style: none;
+	margin: 0;
 	padding-left: 1em;
 }
 
@@ -266,6 +272,7 @@ footer {
 	padding: .5em;
 	opacity: 0.8;
 	font-size: 0.9em;
+	text-align: center;
 }
 
 
