@@ -95,6 +95,7 @@ header nav {
     flex-direction: row;
     gap: 1em;
     justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 header .button {
     border-radius: 48px;
@@ -116,6 +117,7 @@ header .button img:last-child {
     }
     header nav {
         grid-column: 1/-1;
+        gap: .5em;
     }
     header .account {
         grid-row: 1;
@@ -279,11 +281,24 @@ footer {
 /* projects deck */
 
 .deck {
+    display: block;
     columns: 20em auto;
     gap: 2em;
 }
 .deck > * {
     margin-bottom: 2em;
+}
+.shelf {
+    display: flex;
+    flex-direction: row;
+    padding: 1em;
+    overflow-x: scroll;
+    flex-wrap: nowrap;
+    gap: 2em;
+}
+.shelf > * {
+    flex-shrink: 0;
+    width: 20em;
 }
 .card {
 	border-radius: 8px;

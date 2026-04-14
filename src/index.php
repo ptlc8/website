@@ -32,6 +32,7 @@
 				<a class="button" href="." title="Page de projets">Accueil</a>
 				<a class="button" href="projects.php" title="Page de projets">Projets</a>
 				<a class="button" href="<?= get_protocol() ?>://status.<?= get_host() ?>" title="Page d'état">Statuts</a>
+				<a class="button" href="<?= get_protocol() ?>://view.<?= get_host() ?>" title="Graphe de l'infrastructure">Graphe</a>
 			</nav>
 			<?php if ($auth_url = get_auth_url()) { ?>
 				<a class="account button" href="<?= $auth_url ?>" title="Page de compte">
@@ -58,7 +59,7 @@
 				$featured = get_featured_projects();
 				if (count($featured) > 0) {
 				?>
-					<div class="deck">
+					<div class="shelf">
 						<?php foreach ($featured as $subsite) {
 							$id = slugify($subsite->title);
 							$firstLink = !empty($subsite->content) ? ($subsite->content[0]->link ?? '#') : '#';
@@ -92,9 +93,9 @@
 				<?php } else { ?>
 					<p>Aucun projet mis en avant pour le moment.</p>
 				<?php } ?>
-				<div style="text-align: center; margin-top: 1em;">
+				<center>
 					<a class="button" href="projects.php">Découvrir tous les projets →</a>
-				</div>
+				</center>
 			</section>
 
 			<section id="hebergement">
@@ -115,7 +116,8 @@
 						<li data-icon="🔀">Reverse proxy (<a href="https://github.com/ptlc8/apache-docker-proxy" target="_blank">apache-docker-proxy</a>)</li>
 						<li data-icon="🔒">SSL/TLS (Let's Encrypt ou Cloudflare)</li>
 						<li data-icon="⚙️">Jenkins (déploiement automatisé)</li>
-						<li data-icon="📦">Git & GitHub (versioning et centralisation du code)</li>
+						<li data-icon="📦">GitHub & GitLab (versioning, centralisation du code et mirroring)</li>
+						<li data-icon="🧊">Sauvegardes (cron, dumps, Nextcloud répliqué)</li>
 					</ul>
 				</details>
 			</section>
