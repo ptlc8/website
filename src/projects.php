@@ -27,11 +27,14 @@
 		<?php } ?>
 
 		<header>
-			<h1><?= htmlspecialchars(get_site_name()) ?></h1>
+			<h1>
+				<a href="."><?= htmlspecialchars(get_site_name()) ?></a>
+			</h1>
 			<nav>
 				<a class="button" href="." title="Page de projets">Accueil</a>
 				<a class="button" href="projects.php" title="Page de projets">Projets</a>
 				<a class="button" href="<?= get_protocol() ?>://status.<?= get_host() ?>" title="Page d'état">Statuts</a>
+				<a class="button" href="<?= get_protocol() ?>://view.<?= get_host() ?>" title="Graphe de l'infrastructure">Graphe</a>
 			</nav>
 			<?php if ($auth_url = get_auth_url()) { ?>
 				<a class="account button" href="<?= $auth_url ?>" title="Page de compte">

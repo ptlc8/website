@@ -27,7 +27,9 @@
 		<?php } ?>
 
 		<header>
-			<h1><?= htmlspecialchars(get_site_name()) ?></h1>
+			<h1>
+				<a href="."><?= htmlspecialchars(get_site_name()) ?></a>
+			</h1>
 			<nav>
 				<a class="button" href="." title="Page de projets">Accueil</a>
 				<a class="button" href="projects.php" title="Page de projets">Projets</a>
