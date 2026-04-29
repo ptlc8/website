@@ -5,6 +5,12 @@
 		<meta charset="UTF-8" />
 		<title><?= htmlspecialchars(get_site_name()) ?></title>
 		<link rel="stylesheet" href="style.css" />
+		<style>
+		body {
+			animation: animated-bg 6s ease-in-out infinite alternate <?= -(fmod(microtime(true), 12)) ?>s, 
+			           coloring-bg 3s ease-in-out infinite alternate <?= -(fmod(microtime(true), 6)) ?>s;
+		}
+		</style>
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" href="favicon.ico" />
 		<meta name="language" content="fr" />
