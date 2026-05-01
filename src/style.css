@@ -346,16 +346,51 @@ footer {
     flex: 1;
 }
 .card .git img {
-    height: 1.5em;
+    height: 1.2em;
 }
 .card .body {
     margin: 0 1em 1em 1em;
+}
+.card .body .meta-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    margin-bottom: 0.75em;
+    justify-content: center;
+}
+.card .body .badge {
+    display: inline-block;
+    padding: 0.25em 0.75em;
+    border-radius: 12px;
+    font-size: 0.75em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background-color: rgba(var(--badge-color), 0.4);
+    border: 2px solid rgba(var(--badge-color), 0.6);
+    backdrop-filter: blur(5px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card .body .badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.card .body .badge-type {
+    --badge-color: 156, 39, 176;
+}
+.card .body .badge-year {
+    --badge-color: 128, 128, 128;
+    font-family: monospace;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
 }
 .card .body p {
     margin-top: 0;
     text-align: center;
 }
 .card .buttons {
+	margin-top: 0.75em;
     text-align: center;
 }
 .card .button {
@@ -446,4 +481,94 @@ footer {
 	background-size: contain;
 	background-position: center center;
 	pointer-events: none;
+}
+
+
+/* Filters and Sorting */
+
+.filters-container {
+	background-color: var(--container-color);
+	border-radius: 6px;
+	padding: 0.75em 1em;
+	backdrop-filter: blur(10px);
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 1em;
+	align-items: center;
+}
+
+.filters-container .button {
+	margin-left: auto;
+}
+
+.filter-group {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+}
+
+.filter-group label {
+	font-weight: bold;
+	font-size: 0.9em;
+}
+
+.filter-group select {
+	padding: 0.5em 1em;
+	border: none;
+	border-radius: 4px;
+	background-color: var(--container-color);
+	color: var(--text-color);
+	cursor: pointer;
+	font-family: inherit;
+	font-size: 0.9em;
+	transition: transform 0.2s ease;
+	appearance: none;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 0.7em center;
+	padding-right: 2.5em;
+}
+
+.filter-group select:hover {
+	transform: scale(1.05);
+}
+
+.filter-group select:focus {
+	outline: 2px solid var(--accent-color2);
+	outline-offset: 2px;
+	transform: scale(1.05);
+}
+
+.results-info {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 0.5em;
+	padding-top: 0.5em;
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+	font-size: 0.9em;
+}
+
+.results-info .button {
+	padding: 0.3em 0.8em;
+	font-size: 0.85em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.filter-group {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	
+	.filter-group label {
+		min-width: auto;
+		margin-bottom: 0.3em;
+	}
+	
+	.results-info {
+		flex-direction: column;
+		gap: 1em;
+	}
 }

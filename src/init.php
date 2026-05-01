@@ -63,4 +63,19 @@ function get_featured_projects() {
 	}
 	return $featured;
 }
+
+// générer des composants RGB basés sur un texte
+function textToRgb($text) {
+	$pos = ord(strtoupper($text[0])) - 65; // 0-25 (A-Z)
+	
+	$r = round(255 - abs($pos - 4) * 10);
+	$g = round(175 - abs($pos - 18) * 5);
+	$b = round(80 - abs($pos - 2) * 3);
+	
+	$r = max(0, min(255, $r));
+	$g = max(0, min(255, $g));
+	$b = max(0, min(255, $b));
+	
+	return "$r, $g, $b";
+}
 ?>
