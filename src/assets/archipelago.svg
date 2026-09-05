@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 470" fill="none">
+  <title>Carte imaginaire de l’archipel Ambi</title>
+  <path d="M95 157C80 111 126 67 184 76c47 7 64 43 47 75-18 34-26 67-70 68-39 1-55-29-66-62Z" fill="#F3D84B" stroke="#191713" stroke-width="5"/>
+  <path d="M333 70c35-22 99-7 116 31 16 38-12 71-51 77-49 8-95-17-92-55 1-20 11-42 27-53Z" fill="#6F45C5" stroke="#191713" stroke-width="5"/>
+  <path d="M413 244c23-40 92-48 125-10 28 31 12 80-23 101-42 25-111 4-116-40-2-18 4-35 14-51Z" fill="#5DB7C4" stroke="#191713" stroke-width="5"/>
+  <path d="M174 298c21-42 76-59 114-32 34 24 26 71-4 99-34 32-94 35-117-4-11-18-3-44 7-63Z" fill="#E16B5B" stroke="#191713" stroke-width="5"/>
+  <path d="M71 370c15-18 47-21 64-5 16 16 8 42-11 54-22 14-54 5-60-17-3-10 1-23 7-32Z" fill="#F3EEDB" stroke="#191713" stroke-width="5"/>
+  <path d="M226 179c39-13 73-22 103-35M302 278c37-7 72-8 107-4M135 354c22-8 34-20 46-34" stroke="#191713" stroke-width="3" stroke-dasharray="7 10"/>
+  <path d="M258 226c11-14 24-18 39-12 12 5 19 18 17 31" stroke="#6F45C5" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="274" cy="234" r="6" fill="#191713"/>
+  <path d="M475 116l8 15 16 3-12 11 3 17-15-8-15 8 3-17-12-11 16-3 8-15Z" fill="#F3D84B" stroke="#191713" stroke-width="3"/>
+</svg>

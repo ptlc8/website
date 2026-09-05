@@ -1,186 +1,122 @@
 <?php
 include('init.php');
-
-$status = $_GET['status'] ?? 'all';
-$type = $_GET['type'] ?? 'all';
-$sort = $_GET['sort'] ?? 'status';
+include('components.php');
 
 $all = get_sitemap();
-$subsites = array_filter($all, function($subsite) use ($status, $type) {
-	$statusMatch = $status === 'all' || ($subsite->status ?? '') === $status;
-	$types = $subsite->type ?? [];
-	$types = is_array($types) ? $types : [$types];
-	$typeMatch = $type === 'all' || in_array($type, $types);
-	return $statusMatch && $typeMatch;
-});
-
-// Trier
-function hue($hex) {
-	return atan2(sqrt(3) * (hexdec(substr($hex,3,2)) - hexdec(substr($hex,5,2))), 2 * hexdec(substr($hex,1,2)) - hexdec(substr($hex,3,2)) - hexdec(substr($hex,5,2)));
+$featuredList = preg_replace('/, ([^,]+)$/', ' et $1', implode(', ', array_column(array_slice(get_featured_projects(), 0, 3), 'title')));
+$projectsDescription = 'Explore les '.count($all).' jeux, outils et expériences web sur '.SITE_NAME.($featuredList ? ', dont '.$featuredList : '').'.';
+function query_value($name, $default) {
+	return isset($_GET[$name]) && is_string($_GET[$name]) ? $_GET[$name] : $default;
 }
+$requestedStatus = trim(query_value('status', 'all'));
+$requestedType = trim(strtolower(query_value('type', 'all')));
+$requestedSort = query_value('sort', 'selection');
 
-$sorts = ['year-desc' => fn($a,$b) => ($b->year ?? 0) - ($a->year ?? 0), 
-          'year-asc' => fn($a,$b) => ($a->year ?? 0) - ($b->year ?? 0), 
-          'status' => fn($a,$b) => ($b->status ?? '') <=> ($a->status ?? ''), 
-          'color' => fn($a,$b) => hue($a->color ?? '#000') <=> hue($b->color ?? '#000')];
-usort($subsites, $sorts[$sort] ?? $sorts['status']);
+$statusCounts = [];
+$typeCounts = [];
+foreach ($all as $project) {
+	$statusValue = trim((string) ($project->status ?? ''));
+	if ($statusValue !== '') $statusCounts[$statusValue] = ($statusCounts[$statusValue] ?? 0) + 1;
+	foreach (get_project_types($project) as $typeValue)
+		$typeCounts[$typeValue] = ($typeCounts[$typeValue] ?? 0) + 1;
+}
+ksort($typeCounts);
 
-// Compteurs
-$counts = ['status' => ['all' => count($all)], 'type' => ['all' => count($all)]];
-foreach ($all as $subsite) {
-	$s = $subsite->status ?? '';
-	$counts['status'][$s] = ($counts['status'][$s] ?? 0) + 1;
+$status = $requestedStatus === 'all' || isset($statusCounts[$requestedStatus]) ? $requestedStatus : 'all';
+$type = $requestedType === 'all' || isset($typeCounts[$requestedType]) ? $requestedType : 'all';
+$allowedSorts = ['selection', 'year-desc', 'year-asc', 'status', 'title'];
+$sort = in_array($requestedSort, $allowedSorts, true) ? $requestedSort : 'selection';
 
-	$types = $subsite->type ?? [];
-	$types = is_array($types) ? $types : [$types];
-	foreach ($types as $t) {
-		$counts['type'][$t] = ($counts['type'][$t] ?? 0) + 1;
-	}
+$projects = array_values(array_filter($all, function($project) use ($status, $type) {
+	$statusMatch = $status === 'all' || ($project->status ?? '') === $status;
+	$typeMatch = $type === 'all' || in_array($type, get_project_types($project), true);
+	return $statusMatch && $typeMatch;
+}));
+
+$sorts = [
+	'year-desc' => fn($a, $b) => (($b->year ?? 0) <=> ($a->year ?? 0)) ?: strcasecmp($a->title ?? '', $b->title ?? ''),
+	'year-asc' => fn($a, $b) => (($a->year ?? 0) <=> ($b->year ?? 0)) ?: strcasecmp($a->title ?? '', $b->title ?? ''),
+	'status' => function($a, $b) {
+		$order = ['stable' => 0, 'expérimental' => 1, 'archivé' => 2];
+		return (($order[$a->status ?? ''] ?? 99) <=> ($order[$b->status ?? ''] ?? 99))
+			?: (($b->year ?? 0) <=> ($a->year ?? 0));
+	},
+	'title' => fn($a, $b) => strcasecmp($a->title ?? '', $b->title ?? ''),
+];
+if ($sort !== 'selection') usort($projects, $sorts[$sort]);
+
+function filter_url($changes = []) {
+	global $status, $type, $sort;
+	$params = ['status' => $status, 'type' => $type, 'sort' => $sort];
+	$params = array_merge($params, $changes);
+	$params = array_filter($params, fn($value) => $value !== 'all' && $value !== 'selection');
+	return 'projects.php'.($params ? '?'.http_build_query($params) : '');
 }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-	<head>
-		<meta charset="UTF-8" />
-		<title><?= htmlspecialchars(get_site_name()) ?> - Projets</title>
-		<link rel="stylesheet" href="style.css" />
-		<style>
-		body {
-			animation: animated-bg 6s ease-in-out infinite alternate <?= -(fmod(microtime(true), 12)) ?>s, 
-			           coloring-bg 3s ease-in-out infinite alternate <?= -(fmod(microtime(true), 6)) ?>s;
-		}
-		</style>
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="icon" href="favicon.ico" />
-		<meta name="language" content="fr" />
-		<meta name="sitename" content="<?= htmlspecialchars(get_site_name()) ?>" />
-		<meta name="keywords" content="<?= htmlspecialchars(get_site_data()->keywords) ?>" />
-		<meta name="description" content="<?= htmlspecialchars(get_site_data()->description) ?>" />
-		<meta name="robots" content="index, follow" />
-		<meta name="copyright" content="<?= htmlspecialchars(get_site_data()->copyright) ?>" />
-		<meta name="author" content="<?= htmlspecialchars(get_site_data()->author) ?>" />
-		<link rel="canonical" href="<?= get_protocol() ?>://<?= get_host() ?>" />
-		<meta property="og:url" content="<?= get_protocol() ?>://<?= get_host() ?>" />
-		<meta property="og:type" content="website" />
-		<meta property="og:title" content="<?= htmlspecialchars(get_site_name()) ?>" />
-		<meta property="og:description" content="<?= htmlspecialchars(get_site_data()->description) ?>" />
-		<meta property="og:image" content="<?= get_protocol() ?>://<?= get_host() ?>/favicon.ico" />
-	</head>
+	<?php render_head(SITE_NAME.' — Projets', '/projects.php', $projectsDescription); ?>
 	<body>
-		<?php if (date('n') == 4 && date('j') == 1) { ?>
-			<div id="april-fool"></div>
-		<?php } ?>
+		<?php render_header('projects'); ?>
+		<main id="contenu" class="projects-page">
+			<section class="projects-intro" aria-labelledby="projects-title">
+				<p class="eyebrow">Inventaire de l’atelier</p>
+				<h1 id="projects-title">Projets, prototypes<br />et curiosités numériques.</h1>
+			</section>
 
-		<header>
-			<h1>
-				<a href="."><?= htmlspecialchars(get_site_name()) ?></a>
-			</h1>
-			<nav>
-				<a class="button" href="." title="Page de projets">Accueil</a>
-				<a class="button" href="projects.php" title="Page de projets">Projets</a>
-				<a class="button" href="<?= get_protocol() ?>://status.<?= get_host() ?>" title="Page d'état">Statuts</a>
-				<a class="button" href="<?= get_protocol() ?>://view.<?= get_host() ?>" title="Graphe de l'infrastructure">Graphe</a>
-			</nav>
-			<?php if ($auth_url = get_auth_url()) { ?>
-				<a class="account button" href="<?= $auth_url ?>" title="Page de compte">
-					Mon compte
-					<img src="<?= $auth_url ?>/avatar.php" alt="avatar" width="64" height="64" />
-				</a>
-			<?php } ?>
-		</header>
-
-		<main>
-			<form class="filters-container" method="get">
-				<div class="filter-group">
-					<label for="status">Statut :</label>
-					<select name="status" id="status" onchange="this.form.submit()">
-						<?php foreach ($counts['status'] as $s => $count) { ?>
-							<option value="<?= $s ?>" <?= $status === $s ? 'selected' : '' ?>>
-								<?= $s === 'all' ? 'Tous' : ucfirst($s) ?> (<?= $count ?>)
-							</option>
+			<?php if ($typeCounts || $statusCounts) { ?>
+			<section class="catalog-controls" aria-label="Filtrer les projets">
+				<?php if ($typeCounts) { ?>
+				<div class="filter-row">
+					<span class="filter-label">Type</span>
+					<nav class="filter-chips" aria-label="Catégories de projets">
+						<a href="<?= e(filter_url(['type' => 'all'])) ?>" <?= $type === 'all' ? 'aria-current="page"' : '' ?>>Tous <span><?= count($all) ?></span></a>
+						<?php foreach ($typeCounts as $typeName => $count) { ?>
+							<a href="<?= e(filter_url(['type' => $typeName])) ?>" <?= $type === $typeName ? 'aria-current="page"' : '' ?>><?= e(ucfirst($typeName)) ?> <span><?= $count ?></span></a>
 						<?php } ?>
-					</select>
+					</nav>
 				</div>
-				
-				<div class="filter-group">
-					<label for="type">Type :</label>
-					<select name="type" id="type" onchange="this.form.submit()">
-						<?php foreach ($counts['type'] as $t => $count) { ?>
-							<option value="<?= $t ?>" <?= $type === $t ? 'selected' : '' ?>>
-								<?= $t === 'all' ? 'Tous' : ucfirst($t) ?> (<?= $count ?>)
-							</option>
-						<?php } ?>
-					</select>
-				</div>
-				
-				<div class="filter-group">
-					<label for="sort">Tri :</label>
-					<select name="sort" id="sort" onchange="this.form.submit()">
-						<option value="year-desc" <?= $sort === 'year-desc' ? 'selected' : '' ?>>Plus récents</option>
-						<option value="year-asc" <?= $sort === 'year-asc' ? 'selected' : '' ?>>Plus anciens</option>
-						<option value="status" <?= $sort === 'status' ? 'selected' : '' ?>>Par statut</option>
-						<option value="color" <?= $sort === 'color' ? 'selected' : '' ?>>Par couleur</option>
-					</select>
-				</div>
-				
-				<?php if ($status !== 'all' || $type !== 'all' || $sort !== 'status') { ?>
-					<a href="projects.php" class="button">Réinitialiser</a>
 				<?php } ?>
-			</form>
-
-			<div class="deck">
-				<?php foreach ($subsites as $subsite) { ?>
-					<div class="card" id="<?= slugify($subsite->title) ?>" style="background-color:<?= $subsite->color ?>;" onclick="location.href='<?= $subsite->content[0]->link ?? '#' ?>'">
-						<img class="preview" alt="" src="<?= htmlspecialchars($subsite->preview ?? '') ?>" />
-						<div class="head">
-							<img src="<?= htmlspecialchars($subsite->img) ?>" width="128" alt="<?= htmlspecialchars($subsite->title) ?>" />
-							<h2 class="title"><?= htmlspecialchars($subsite->title) ?></h2>
-							<?php if ($subsite->git ?? false) { ?>
-								<a class="button git" href="<?= htmlspecialchars($subsite->git) ?>" target="_blank" title="Dépôt git" onclick="event.stopPropagation()">
-									<img src="assets/git.png" height="32" alt="git" />
-								</a>
+				<div class="filter-secondary">
+					<?php if ($statusCounts) { ?>
+					<div class="filter-row">
+						<span class="filter-label">État</span>
+						<nav class="filter-chips" aria-label="État des projets">
+							<a href="<?= e(filter_url(['status' => 'all'])) ?>" <?= $status === 'all' ? 'aria-current="page"' : '' ?>>Tous</a>
+							<?php foreach ($statusCounts as $statusName => $count) { ?>
+								<a href="<?= e(filter_url(['status' => $statusName])) ?>" <?= $status === $statusName ? 'aria-current="page"' : '' ?>><?= e(ucfirst($statusName)) ?> <span><?= $count ?></span></a>
 							<?php } ?>
-						</div>
-						<div class="body">
-							<div class="meta-info">
-								<?php if ($subsite->status ?? false) { ?>
-									<span class="badge" style="--badge-color: <?= textToRgb($subsite->status) ?>;" title="Statut du projet">
-										<?= htmlspecialchars(ucfirst($subsite->status)) ?>
-									</span>
-								<?php } ?>
-								<?php 
-								$types = $subsite->type ?? [];
-								$types = is_array($types) ? $types : [$types];
-								foreach ($types as $type) { ?>
-									<span class="badge badge-type" title="Type de projet">
-										<?= htmlspecialchars(ucfirst($type)) ?>
-									</span>
-								<?php } ?>
-								<?php if ($subsite->year ?? false) { ?>
-									<span class="badge badge-year" title="Année de création">
-										<?= htmlspecialchars($subsite->year) ?>
-									</span>
-								<?php } ?>
-							</div>
-							<?php if ($subsite->description ?? false) { ?>
-								<p><?= htmlspecialchars($subsite->description) ?></p>
-							<?php } ?>
-							<div class="buttons">
-								<?php foreach ($subsite->content ?? [] as $button) { ?>
-									<a class="button" href="<?= $button->link ?? '#' ?>" title="<?= htmlspecialchars($button->title ?? '') ?>" onclick="event.stopPropagation()">
-										<?= htmlspecialchars($button->title ?? '') ?>
-									</a>
-								<?php } ?>
-							</div>
-						</div>
+						</nav>
 					</div>
-				<?php } ?>
-			</div>
-		</main>
+					<?php } ?>
+					<div class="filter-row">
+						<span class="filter-label">Tri</span>
+						<nav class="filter-chips" aria-label="Ordre des projets">
+							<?php foreach ([
+								'selection' => 'Sélection', 'year-desc' => 'Plus récents', 'year-asc' => 'Plus anciens',
+								'status' => 'Par état', 'title' => 'Alphabétique'
+							] as $sortName => $sortLabel) { ?>
+								<a href="<?= e(filter_url(['sort' => $sortName])) ?>" <?= $sort === $sortName ? 'aria-current="page"' : '' ?>><?= e($sortLabel) ?></a>
+							<?php } ?>
+						</nav>
+					</div>
+				</div>
+			</section>
+			<?php } ?>
 
-		<footer>
-			<?= htmlspecialchars(get_site_data()->copyright) ?>
-			- Fait maison avec ❤️
-		</footer>
+			<div class="catalog-summary" aria-live="polite">
+				<span><strong><?= count($projects) ?></strong> résultat<?= count($projects) > 1 ? 's' : '' ?></span>
+				<?php if ($status !== 'all' || $type !== 'all' || $sort !== 'selection') { ?><a href="projects.php">Réinitialiser les filtres</a><?php } ?>
+			</div>
+
+			<?php if ($projects) { ?>
+				<section class="project-grid" aria-label="Liste des projets">
+					<?php foreach ($projects as $project) render_project_card($project); ?>
+				</section>
+			<?php } else { ?>
+				<section class="empty-state"><span aria-hidden="true">≈</span><h2>Aucune île par ici.</h2><p>Essayez une autre combinaison de filtres.</p><a href="projects.php">Voir tous les projets</a></section>
+			<?php } ?>
+		</main>
+		<?php render_footer(); ?>
 	</body>
 </html>

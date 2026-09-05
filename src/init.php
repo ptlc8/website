@@ -1,4 +1,7 @@
 <?php
+const SITE_NAME = 'Ambi.dev';
+const SITE_AUTHOR = 'Ambi alias PTLC';
+
 // si le fichier config.php existe, on l'inclut
 @include('config.php');
 
@@ -6,12 +9,13 @@
 function get_config($name) {
 	if (defined($name) && !empty(constant($name)))
 		return constant($name);
-	return getenv($name) ?? null;
+	return getenv($name) ?: null;
 }
 
 // obtenir le nom de domaine
 function get_host() {
-	return $_SERVER['HTTP_HOST'];
+	$host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+	return preg_match('/^[a-z0-9.-]+(?::[0-9]+)?$/i', $host) ? $host : 'localhost';
 }
 
 // obtenir le protocole
@@ -23,21 +27,6 @@ function get_protocol() {
 	return 'http';
 }
 
-// obtenir le nom du site
-function get_site_name() {
-	return get_config('SITE_NAME') ?? get_host();
-}
-
-// obtenir les informations du site
-function get_site_data() {
-	$site_data = new stdClass();
-	$site_data->description = get_config('SITE_DESCRIPTION') ?? '';
-	$site_data->keywords = get_config('SITE_KEYWORDS') ?? '';
-	$site_data->author = get_config('SITE_AUTHOR') ?? '';
-	$site_data->copyright = '© '.date('Y').' '.$site_data->author.' - Tous droits réservés';
-	return $site_data;
-}
-
 // obtenir l'URL du serveur d'authentification
 function get_auth_url() {
 	return get_config('AUTH_URL') ?? '';
@@ -45,7 +34,13 @@ function get_auth_url() {
 
 // obtenir la liste des projets
 function get_sitemap() {
-	return json_decode(file_get_contents('sitemap.json'));
+	$defaultPath = is_file(__DIR__.'/sitemap.json') ? __DIR__.'/sitemap.json' : __DIR__.'/../sitemap.json.prod';
+	$path = get_config('SITEMAP_PATH') ?: $defaultPath;
+	if (!is_file($path) || !is_readable($path))
+		return [];
+
+	$data = json_decode(file_get_contents($path));
+	return is_array($data) ? $data : [];
 }
 
 // convertir un texte en slug
@@ -62,6 +57,13 @@ function get_featured_projects() {
 			$featured[] = $project;
 	}
 	return $featured;
+}
+
+function get_project_types($project) {
+	$types = $project->type ?? [];
+	$types = is_array($types) ? $types : [$types];
+	$types = array_map(fn($type) => trim(strtolower((string) $type)), $types);
+	return array_values(array_unique(array_filter($types)));
 }
 
 // générer des composants RGB basés sur un texte
